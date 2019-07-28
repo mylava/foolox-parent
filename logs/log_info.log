@@ -1,0 +1,91 @@
+2019-07-27 22:34:23.569 [main] INFO  test.Application - Starting Application on MacBook.local with PID 63700 (/Users/lipengfei/Documents/code/feature/foolox-parent/base-io/target/test-classes started by lipengfei in /Users/lipengfei/Documents/code/feature/foolox-parent)
+2019-07-27 22:34:23.570 [main] INFO  test.Application - No active profile set, falling back to default profiles: default
+2019-07-27 22:34:24.024 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-07-27 22:34:24.025 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-07-27 22:34:24.045 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+2019-07-27 22:34:24.056 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-07-27 22:34:24.057 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-07-27 22:34:24.065 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
+2019-07-27 22:34:24.257 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'messageDispatcher' of type [com.foolox.base.io.dispatch.MessageDispatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-27 22:34:24.338 [main] INFO  com.foolox.base.io.dispatch.MessageFactory - init messageHandler
+2019-07-27 22:34:24.398 [main] INFO  com.foolox.base.io.config.DispatcherConfig - -------regist Controller test.HelloFacade@67110f71 -------
+2019-07-27 22:34:24.868 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-07-27 22:34:24.924 [cluster-ClusterId{value='5d3c60f0a95d0ff8d42b37e9', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:20}] to localhost:27017
+2019-07-27 22:34:24.954 [cluster-ClusterId{value='5d3c60f0a95d0ff8d42b37e9', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=28852530}
+2019-07-27 22:34:25.223 [main] INFO  com.foolox.base.common.config.StartedEventListener - set ContextUtil [org.springframework.context.annotation.AnnotationConfigApplicationContext@68be8808, started on Sat Jul 27 22:34:23 CST 2019]
+2019-07-27 22:34:25.228 [main] INFO  test.Application - Started Application in 2.198 seconds (JVM running for 2.996)
+2019-07-27 22:34:25.264 [main] INFO  org.tio.server.TioServer - 
+|----------------------------------------------------------------------------------------|
+| t-io site         | https://www.t-io.org                                               |
+| t-io on gitee     | https://gitee.com/tywo45/t-io                                      |
+| t-io on github    | https://github.com/tywo45/t-io                                     |
+| t-io version      | 3.3.5.v20190712-RELEASE                                            |
+| ---------------------------------------------------------------------------------------|
+| GroupContext name | fooloxGame                                                         |
+| Started at        | 2019-07-27 22:34:25                                                |
+| Listen on         | 0.0.0.0:9000                                                       |
+| Main Class        | test.Application                                                   |
+| Jvm start time    | 2957ms                                                             |
+| Tio start time    | 32ms                                                               |
+| Pid               | 63700                                                              |
+|----------------------------------------------------------------------------------------|
+
+2019-07-27 22:34:25.265 [main] INFO  com.foolox.base.io.server.IOServer - ioServer启动，耗时[32]毫秒
+2019-07-27 22:34:25.265 [main] INFO  test.Application - HelloFacade = test.HelloFacade@67110f71
+2019-07-27 22:34:25.328 [main] INFO  test.Application - {"action":101,"message":"fasfasd","module":101,"token":"token...","userId":"1"}
+2019-07-27 22:34:25.714 [tio-group-2] INFO  org.tio.server.TioServer - t-io latest version:3.3.6.v20190725-RELEASE，your version:3.3.5.v20190712-RELEASE
+2019-07-27 22:34:25.715 [tio-group-2] INFO  org.tio.server.TioServer - You haven't upgraded in 13 days
+2019-07-27 22:34:29.712 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - token=1, userId=1
+2019-07-27 22:34:29.897 [tio-group-3] INFO  io.lettuce.core.EpollProvider - Starting without optional epoll library
+2019-07-27 22:34:29.898 [tio-group-3] INFO  io.lettuce.core.KqueueProvider - Starting without optional kqueue library
+2019-07-27 22:34:38.694 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - redisToken=null
+2019-07-27 22:34:49.916 [tio-worker-3] INFO  org.tio.core.task.CloseRunnable - ServerGroupContext [name=fooloxGame], server:0.0.0.0:9000, client:127.0.0.1:60415 准备关闭连接, isNeedRemove:true, receive close flag
+2019-07-27 22:34:49.917 [tio-worker-3] INFO  org.tio.core.ChannelContext - 关闭前server:0.0.0.0:9000, client:127.0.0.1:60415, 关闭后server:0.0.0.0:9000, client:$UNKNOWN:1
+2019-07-27 22:52:17.223 [main] INFO  test.Application - Starting Application on MacBook.local with PID 63837 (/Users/lipengfei/Documents/code/feature/foolox-parent/base-io/target/test-classes started by lipengfei in /Users/lipengfei/Documents/code/feature/foolox-parent)
+2019-07-27 22:52:17.225 [main] INFO  test.Application - No active profile set, falling back to default profiles: default
+2019-07-27 22:52:17.638 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-07-27 22:52:17.639 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-07-27 22:52:17.658 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+2019-07-27 22:52:17.668 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-07-27 22:52:17.670 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-07-27 22:52:17.679 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
+2019-07-27 22:52:17.860 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'messageDispatcher' of type [com.foolox.base.io.dispatch.MessageDispatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-27 22:52:17.937 [main] INFO  com.foolox.base.io.dispatch.MessageFactory - init messageHandler
+2019-07-27 22:52:17.993 [main] INFO  com.foolox.base.io.config.DispatcherConfig - -------regist Controller test.HelloFacade@2875b016 -------
+2019-07-27 22:52:18.462 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-07-27 22:52:18.517 [cluster-ClusterId{value='5d3c6522a95d0ff95d231c7c', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:21}] to localhost:27017
+2019-07-27 22:52:18.545 [cluster-ClusterId{value='5d3c6522a95d0ff95d231c7c', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=26684648}
+2019-07-27 22:52:18.798 [main] INFO  com.foolox.base.common.config.StartedEventListener - set ContextUtil [org.springframework.context.annotation.AnnotationConfigApplicationContext@1817f1eb, started on Sat Jul 27 22:52:17 CST 2019]
+2019-07-27 22:52:18.803 [main] INFO  test.Application - Started Application in 2.048 seconds (JVM running for 2.835)
+2019-07-27 22:52:18.838 [main] INFO  org.tio.server.TioServer - 
+|----------------------------------------------------------------------------------------|
+| t-io site         | https://www.t-io.org                                               |
+| t-io on gitee     | https://gitee.com/tywo45/t-io                                      |
+| t-io on github    | https://github.com/tywo45/t-io                                     |
+| t-io version      | 3.3.5.v20190712-RELEASE                                            |
+| ---------------------------------------------------------------------------------------|
+| GroupContext name | fooloxGame                                                         |
+| Started at        | 2019-07-27 22:52:18                                                |
+| Listen on         | 0.0.0.0:9000                                                       |
+| Main Class        | test.Application                                                   |
+| Jvm start time    | 2791ms                                                             |
+| Tio start time    | 32ms                                                               |
+| Pid               | 63837                                                              |
+|----------------------------------------------------------------------------------------|
+
+2019-07-27 22:52:18.839 [main] INFO  com.foolox.base.io.server.IOServer - ioServer启动，耗时[32]毫秒
+2019-07-27 22:52:18.839 [main] INFO  test.Application - HelloFacade = test.HelloFacade@2875b016
+2019-07-27 22:52:18.899 [main] INFO  test.Application - {"action":101,"message":"fasfasd","module":101,"token":"token...","userId":"1"}
+2019-07-27 22:52:22.393 [tio-group-2] INFO  org.tio.server.TioServer - t-io latest version:3.3.6.v20190725-RELEASE，your version:3.3.5.v20190712-RELEASE
+2019-07-27 22:52:22.394 [tio-group-2] INFO  org.tio.server.TioServer - You haven't upgraded in 13 days
+2019-07-27 22:52:35.075 [tio-group-3] INFO  com.foolox.base.io.session.SessionManager - [1] registered...
+2019-07-27 22:52:35.076 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - token=1, userId=1
+2019-07-27 22:52:35.251 [tio-group-3] INFO  io.lettuce.core.EpollProvider - Starting without optional epoll library
+2019-07-27 22:52:35.253 [tio-group-3] INFO  io.lettuce.core.KqueueProvider - Starting without optional kqueue library
+2019-07-27 22:52:47.090 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - redisToken=null
+2019-07-27 22:52:56.968 [tio-group-3] INFO  com.foolox.base.io.sender.MessageSender - send to client: userId=1, message=CommonError(command=connect, message=CodeMessage(code=500103, message=用户尚未登录：token))
+2019-07-27 22:52:56.976 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - close connection after chechAuth: token=[1], userId=[1]
+2019-07-27 22:52:56.976 [tio-worker-4] INFO  com.foolox.base.io.session.SessionManager - before close, remove session success
+2019-07-27 22:52:56.976 [tio-group-3] INFO  com.foolox.base.io.server.IOEventHandler - after handshaked, add session success
+2019-07-27 22:52:56.977 [tio-worker-4] INFO  org.tio.core.task.CloseRunnable - ServerGroupContext [name=fooloxGame], server:0.0.0.0:9000, client:127.0.0.1:64925 准备关闭连接, isNeedRemove:true, receive close flag
+2019-07-27 22:52:56.978 [tio-worker-4] INFO  org.tio.core.ChannelContext - 关闭前server:0.0.0.0:9000, client:127.0.0.1:64925, 关闭后server:0.0.0.0:9000, client:$UNKNOWN:1

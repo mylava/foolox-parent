@@ -1,0 +1,36 @@
+#server:
+#  port: 8000
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/foolox_game
+  #redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    password: mylava
+    database: 0
+    #redis连接池配置
+    jedis:
+      pool:
+        max-idle: 500
+        max-wait: 500
+        max-active: 1000
+
+#logging:
+#  config:
+##logging:
+##  level: debug cn.mylava.seckill.dao
+#
+#
+#
+#
+
+foolox:
+  message:
+    packageName: test
+  ioServer:
+    port: 9000
+
+
