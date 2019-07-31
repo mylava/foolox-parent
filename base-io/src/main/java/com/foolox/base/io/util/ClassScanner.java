@@ -20,9 +20,9 @@ import java.util.function.Predicate;
 /**
  * comment:类扫描器 使用此工具类扫描，目标不需要注入到spring容器里
  *
- * @see BeanPostProcessor
  * @author: lipengfei
  * @date: 08/07/2019
+ * @see BeanPostProcessor
  */
 @Slf4j
 public class ClassScanner {

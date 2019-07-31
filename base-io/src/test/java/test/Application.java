@@ -2,14 +2,16 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import com.foolox.base.io.client.FooloxClient;
-import com.foolox.base.io.dispatch.MessageDispatcher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * comment:
@@ -18,6 +20,7 @@ import java.io.IOException;
  * @date: 25/07/2019
  */
 @Slf4j
+@EnableScheduling
 @ComponentScan(basePackages = {"com.foolox.base.io", "com.foolox.base.common", "test"})
 @SpringBootApplication
 public class Application {
@@ -28,12 +31,10 @@ public class Application {
         log.info("HelloFacade = {}", bean);
 
         FooloxClient client = new FooloxClient();
-        client.setUserId("1");
-        client.setMessage("fasfasd");
+        Map<String, String> message = new HashMap<>();
+        message.put("info", "test message");
+        client.setMessage(JSON.toJSONString(message));
         client.setToken("token...");
-        client.setModule((short) 101);
-        client.setAction((short) 101);
-
 
         String s = JSON.toJSONString(client);
         log.info(s);

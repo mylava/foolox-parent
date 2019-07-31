@@ -1,7 +1,6 @@
 package com.foolox.base.io.dispatch;
 
-import com.foolox.base.common.util.MessageKey;
-import com.foolox.base.io.input.Message;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -18,37 +17,32 @@ import java.util.Map;
 @Slf4j
 @Component
 public class MessageDispatcher {
-    /**
-     * [module_cmd, CmdExecutor]
-     */
-    private static final Map<String, CmdExecutor> MODULE_CMD_HANDLERS = new HashMap<>();
+
+    private static final Map<String, CmdExecutor> COMMAND_HANDLERS = new HashMap<>();
 
     public void registerMethodInvoke(String key, CmdExecutor executor) {
-        if (MODULE_CMD_HANDLERS.containsKey(key)) {
-            throw new RuntimeException(String.format("module[%d] duplicated", key));
+        if (COMMAND_HANDLERS.containsKey(key)) {
+            throw new RuntimeException(String.format("handler [%s] duplicated", key));
         }
-        MODULE_CMD_HANDLERS.put(key, executor);
+        COMMAND_HANDLERS.put(key, executor);
     }
 
     /**
      * message entrance, in which io thread dispatch messages
      *
      * @param userId
+     * @param command
      * @param message
      */
-    public void dispatch(String userId, Message message) throws InvocationTargetException, IllegalAccessException {
-        short module = message.getModule();
-        short cmd = message.getCmd();
-
-        CmdExecutor cmdExecutor = MODULE_CMD_HANDLERS.get(MessageKey.buildKey(module, cmd));
+    public void dispatch(String userId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
+        CmdExecutor cmdExecutor = COMMAND_HANDLERS.get(command);
         if (cmdExecutor == null) {
-            log.error("message executor missed, module={},cmd={}", module, cmd);
+            log.error("message executor missed, command={}", command);
             return;
         }
-
         Object[] params = convertToMethodParams(userId, cmdExecutor.getParams(), message);
-        Object controller = cmdExecutor.getHandler();
-        cmdExecutor.getMethod().invoke(controller, params);
+        Object handler = cmdExecutor.getHandler();
+        cmdExecutor.getMethod().invoke(handler, params);
     }
 
     /**
@@ -59,14 +53,14 @@ public class MessageDispatcher {
      * @param message
      * @return
      */
-    private Object[] convertToMethodParams(String userId, Class<?>[] methodParams, Message message) {
+    private Object[] convertToMethodParams(String userId, Class<?>[] methodParams, JSONObject message) {
         Object[] result = new Object[methodParams == null ? 0 : methodParams.length];
 
         for (int i = 0; i < result.length; i++) {
             Class<?> param = methodParams[i];
             if (String.class.isAssignableFrom(param)) {
                 result[i] = userId;
-            } else if (Message.class.isAssignableFrom(param)) {
+            } else if (JSONObject.class.isAssignableFrom(param)) {
                 result[i] = message;
             }
         }

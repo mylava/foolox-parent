@@ -1,8 +1,10 @@
 package test;
 
-import com.foolox.base.constant.annotation.MessageMapping;
+import com.alibaba.fastjson.JSONObject;
+import com.foolox.base.constant.annotation.Facade;
+import com.foolox.base.constant.annotation.MessageEvent;
+import com.foolox.base.io.handler.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 
 /**
  * comment:
@@ -11,10 +13,11 @@ import org.springframework.stereotype.Controller;
  * @date: 17/07/2019
  */
 @Slf4j
-@Controller
-public class HelloFacade {
-    @MessageMapping
-    public void hello(String userId, HelloMessage message) {
+@Facade(MessageEvent.GAME_STATUS)
+public class HelloFacade extends MessageHandler {
+
+    @Override
+    public void execute(String userId, JSONObject message) {
         log.info("{},{}", userId, message);
 //        MessageSender.sendToUser(userId,"hello",message);
     }

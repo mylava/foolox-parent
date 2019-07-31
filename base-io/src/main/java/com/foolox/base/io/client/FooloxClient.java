@@ -14,12 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 public class FooloxClient {
     private IOServer server;
-    private String userId;
     //用于前端传命令
     private String message;
     //用于鉴权
     private String token;
-    private short module;
-    private short action;
-
+    private String command;
 }

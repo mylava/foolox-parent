@@ -1,7 +1,6 @@
 package com.foolox.base.poker.event;
 
-import com.foolox.base.common.result.OutMessage;
-import com.foolox.base.poker.game.CardType;
+import com.foolox.base.poker.model.CardType;
 import lombok.Data;
 
 /**
@@ -11,7 +10,7 @@ import lombok.Data;
  * @date: 29/05/2019
  */
 @Data
-public abstract class TakeCards implements OutMessage {
+public abstract class TakeCards {
 
     private String banker;     //庄家
     private boolean allow;        //符合出牌规则 ，

@@ -1,13 +1,13 @@
 package com.foolox.base.io.server;
 
 import com.alibaba.fastjson.JSON;
-import com.foolox.base.common.result.CodeMessage;
-import com.foolox.base.common.result.CommonError;
-import com.foolox.base.common.util.FooloxUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.foolox.base.common.util.redis.RedisPlayerHelper;
+import com.foolox.base.constant.config.TestSwitch;
+import com.foolox.base.constant.result.CodeMessage;
+import com.foolox.base.constant.result.CommonMessage;
 import com.foolox.base.io.client.FooloxClient;
 import com.foolox.base.io.dispatch.MessageDispatcher;
-import com.foolox.base.io.dispatch.MessageFactory;
-import com.foolox.base.io.input.Message;
 import com.foolox.base.io.sender.MessageSender;
 import com.foolox.base.io.session.SessionManager;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
 import org.tio.http.common.HttpRequest;
 import org.tio.http.common.HttpResponse;
-import org.tio.utils.json.Json;
 import org.tio.websocket.common.WsRequest;
 import org.tio.websocket.server.handler.IWsMsgHandler;
 
@@ -48,19 +47,22 @@ public class IOEventHandler implements IWsMsgHandler {
         channelContext.setAttribute("userId", userId);
         channelContext.setAttribute("token", token);
         SessionManager.instance.registerSession(userId, channelContext.getGroupContext());
+        log.info("on handshaked, add session success");
         return httpResponse;
     }
 
     @Override
     public void onAfterHandshaked(HttpRequest httpRequest, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
         //鉴权
-        String token = channelContext.getAttribute("token").toString();
-        String userId = channelContext.getAttribute("userId").toString();
-        if (!checkAuth(token, userId)) {
-            Tio.remove(channelContext, "receive close flag");
-            log.info("close connection after chechAuth: token=[{}], userId=[{}]", token, userId);
+        if (TestSwitch.checkAuth) {
+            String token = channelContext.getAttribute("token").toString();
+            String userId = channelContext.getAttribute("userId").toString();
+            if (!checkAuth(token, userId)) {
+                Tio.remove(channelContext, "receive close flag");
+                log.info("after handshaked, close session success, chechAuth: token=[{}], userId=[{}]", token, userId);
+            }
         }
-        log.info("after handshaked, add session success");
+
     }
 
     @Override
@@ -82,16 +84,18 @@ public class IOEventHandler implements IWsMsgHandler {
             FooloxClient fooloxClient = JSON.parseObject(text, FooloxClient.class);
             fooloxClient.setServer(server);
 
-            short module = fooloxClient.getModule();
-            short action = fooloxClient.getAction();
-            log.info("module [{}], action [{}]", module, action);
+            String command = fooloxClient.getCommand();
+            log.info("receive pact, command is: [{}], message is: [{}]", command, fooloxClient.getMessage());
+            if (StringUtils.isEmpty(command)) {
+                return null;
+            }
+            String userId = channelContext.getAttribute("userId").toString();
 
-            Class<? extends Message> messageClass = MessageFactory.getInstance().getMessageMeta(module, action);
-            Message message = JSON.parseObject(fooloxClient.getMessage(), messageClass);
-            log.info("receive pact, message is: [{}]", message.getClass().getSimpleName());
+            //更新token过期时间
+            RedisPlayerHelper.expireToken(userId);
 
             //交由controller处理
-            messageDispatcher.dispatch(fooloxClient.getUserId(), message);
+            messageDispatcher.dispatch(userId, command, JSONObject.parseObject(fooloxClient.getMessage()));
         }
         return null;
     }
@@ -104,21 +108,19 @@ public class IOEventHandler implements IWsMsgHandler {
      */
     private boolean checkAuth(String token, String userId) {
         log.info("token={}, userId={}", token, userId);
-        CommonError commonError = new CommonError();
-        commonError.setCommand("connect");
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId)) {
             CodeMessage codeMessage = CodeMessage.PARAMS_EMPTY_ERROR.fillArgs("token", "userId");
-            commonError.setMessage(codeMessage);
-            MessageSender.sendToUser(userId, commonError);
+            CommonMessage commonMessage = new CommonMessage("connect", codeMessage);
+            MessageSender.sendToUser(userId, commonMessage);
             return false;
         }
+        //校验token
+        String redisToken = RedisPlayerHelper.getToken(userId);
 
-        String redisToken = FooloxUtils.getTokenByUserId(userId);
         log.info("redisToken={}", redisToken);
         if (null == redisToken || !token.equals(redisToken)) {
             CodeMessage codeMessage = CodeMessage.HAS_NO_TOKEN_ERROR.fillArgs("token", "userId");
-            commonError.setMessage(codeMessage);
-            MessageSender.sendToUser(userId, commonError);
+            CommonMessage commonMessage = new CommonMessage("connect", codeMessage);
             return false;
         }
         return true;

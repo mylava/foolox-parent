@@ -4,7 +4,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/foolox_game
-  #redis
+  #rediskey
   redis:
     host: 127.0.0.1
     port: 6379
@@ -28,9 +28,13 @@ spring:
 #
 
 foolox:
-  message:
-    packageName: test
   ioServer:
     port: 9000
+    #会话超时时间10分钟
+    timeout: 600000
+    machineType: bullfight
+  test:
+    checkAuth: false
+
 
 

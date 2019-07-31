@@ -1,8 +1,0 @@
-2019-07-27 22:34:49.915 [tio-worker-3] ERROR org.tio.core.task.CloseRunnable - java.lang.NullPointerException
-java.lang.NullPointerException: null
-	at com.foolox.base.io.session.SessionManager.onBeforeClose(SessionManager.java:52)
-	at org.tio.core.task.CloseRunnable.runTask(CloseRunnable.java:61)
-	at org.tio.utils.thread.pool.AbstractSynRunnable.run(AbstractSynRunnable.java:87)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at java.lang.Thread.run(Thread.java:745)

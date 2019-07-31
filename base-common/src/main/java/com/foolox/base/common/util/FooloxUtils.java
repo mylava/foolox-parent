@@ -1,11 +1,12 @@
 package com.foolox.base.common.util;
 
 
-import com.foolox.base.common.disruptor.event.DbEvent;
 import com.foolox.base.common.disruptor.event.DbEventType;
 import com.foolox.base.common.disruptor.event.OperationEvent;
-import com.foolox.base.common.util.redis.UserPrefix;
-import com.foolox.base.common.util.redis.RedisUtil;
+import com.foolox.base.constant.disruptor.DbEvent;
+import com.foolox.base.constant.rediskey.PlayerPrefix;
+import com.foolox.base.constant.rediskey.RoomPrefix;
+import com.foolox.base.db.domain.ClientSession;
 import com.lmax.disruptor.dsl.Disruptor;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -66,7 +67,7 @@ public class FooloxUtils {
     public static String getRandomNumberChar(int length) {
         if (length > 1) {
             double random = (Math.random() * 9 + 1);
-            int pow = (int) Math.pow(10d, length-1);
+            int pow = (int) Math.pow(10d, length - 1);
             return String.valueOf((int) (random * pow));
         }
         return null;
@@ -79,18 +80,18 @@ public class FooloxUtils {
      * @param userId
      * @return
      */
-//    public static ClientSession getClientSessionById(String userId) {
-//        return redisService.get(UserPrefix.PLAYER_ID_CLIENTSESSION, userId, ClientSession.class);
-//    }
-//
-//    /**
-//     * 保存 UserId 与 ClientSession 映射关系到缓存
-//     *
-//     * @param userId
-//     */
-//    public static void setClientSessionById(String userId, ClientSession clientSession) {
-//        redisService.set(UserPrefix.PLAYER_ID_CLIENTSESSION, userId, clientSession);
-//    }
+    public static ClientSession getClientSessionById(String userId) {
+        return RedisUtil.get(PlayerPrefix.USERID_SESSION, userId, ClientSession.class);
+    }
+
+    /**
+     * 保存 UserId 与 ClientSession 映射关系到缓存
+     *
+     * @param userId
+     */
+    public static void setClientSessionById(String userId, ClientSession clientSession) {
+        RedisUtil.set(PlayerPrefix.USERID_SESSION, userId, clientSession);
+    }
 //
 //    /**
 //     * 从缓存中删除 UserId 与 ClientSession 映射关系
@@ -98,7 +99,7 @@ public class FooloxUtils {
 //     * @param userId
 //     */
 //    public static void delClientSessionById(String userId) {
-//        redisService.del(UserPrefix.PLAYER_ID_CLIENTSESSION, userId);
+//        redisService.del(PlayerPrefix.USERID_SESSION, userId);
 //    }
 //
 //    /**
@@ -110,7 +111,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static <T extends Board> T getBoardByRoomId(String roomId, Class<T> clazz) {
-//        return redisService.get(GamePrefix.ROOM_ROOMID_BOARD, roomId, clazz);
+//        return redisService.get(RoomPrefix.ROOM_ROOMID_BOARD, roomId, clazz);
 //    }
 //
 //    /**
@@ -121,7 +122,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void setBoardByRoomId(String roomId, Board board) {
-//        redisService.set(GamePrefix.ROOM_ROOMID_BOARD, roomId, board);
+//        redisService.set(RoomPrefix.ROOM_ROOMID_BOARD, roomId, board);
 //    }
 //
 //    /**
@@ -131,18 +132,10 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void delBoardByRoomId(String roomId) {
-//        redisService.del(GamePrefix.ROOM_ROOMID_BOARD, roomId);
+//        redisService.del(RoomPrefix.ROOM_ROOMID_BOARD, roomId);
 //    }
 //
-//    /**
-//     * 通过 userId 获取 RoomId
-//     *
-//     * @param userId
-//     * @return
-//     */
-//    public static String getRoomIdByUserId(String userId) {
-//        return redisService.get(GamePrefix.ROOM_USERID_GAMEROOMID, userId);
-//    }
+
 //
 //    /**
 //     * 保存 userId 与 gameRoomId 映射关系到缓存
@@ -152,7 +145,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void setRoomIdByUserId(String userId, String gameRoomId) {
-//        redisService.set(GamePrefix.ROOM_USERID_GAMEROOMID, userId, gameRoomId);
+//        redisService.set(RoomPrefix.USERID_GAMEROOMID, userId, gameRoomId);
 //    }
 //
 //    /**
@@ -162,18 +155,18 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void delRoomIdByUserId(String userId) {
-//        redisService.del(GamePrefix.ROOM_USERID_GAMEROOMID, userId);
+//        redisService.del(RoomPrefix.USERID_GAMEROOMID, userId);
 //    }
 //
-//    /**
-//     * 通过 roomId 获取 GameRoom
-//     *
-//     * @param roomId
-//     * @return
-//     */
-//    public static GameRoom getRoomById(String roomId) {
-//        return redisService.get(GamePrefix.ROOM_ROOMID_GAMEROOM, roomId, GameRoom.class);
-//    }
+    /**
+     * 通过 roomId 获取 GameRoom
+     *
+     * @param roomId
+     * @return
+     */
+    public static <T> T getRoomById(String roomId, Class<T> clazz) {
+        return RedisUtil.get(RoomPrefix.ROOM_ROOMID_GAMEROOM, roomId, clazz);
+    }
 //
 //    /**
 //     * 保存 roomId 与 GameRoom 映射关系到缓存
@@ -182,26 +175,26 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void setRoomById(String roomId, GameRoom gameRoom) {
-//        redisService.set(GamePrefix.ROOM_ROOMID_GAMEROOM, roomId, gameRoom);
+//        redisService.set(RoomPrefix.ROOM_ROOMID_GAMEROOM, roomId, gameRoom);
 //    }
 //
 //    /**
-//     * 通过 playwayId 获取 Playway
+//     * 通过 playwayId 获取 PlaywayMeta
 //     *
 //     * @param playwayId
 //     * @return
 //     */
-//    public static Playway getGamePlaywayById(String playwayId) {
-//        return redisService.get(SystemPrefix.CONFIG_ID_PLAYWAY, playwayId, Playway.class);
+//    public static PlaywayMeta getGamePlaywayById(String playwayId) {
+//        return redisService.get(SystemPrefix.CONFIG_ID_PLAYWAY, playwayId, PlaywayMeta.class);
 //    }
 //
 //    /**
-//     * 保存 playwayId 与 Playway 映射关系到缓存
+//     * 保存 playwayId 与 PlaywayMeta 映射关系到缓存
 //     *
 //     * @param playwayId
 //     * @return
 //     */
-//    public static void setGamePlaywayById(String playwayId, Playway playway) {
+//    public static void setGamePlaywayById(String playwayId, PlaywayMeta playway) {
 //        redisService.set(SystemPrefix.CONFIG_ID_PLAYWAY, playwayId, playway);
 //    }
 //
@@ -212,7 +205,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static List<ClientSession> getRoomClientSessionList(String roomId) {
-//        return redisService.lrange(GamePrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, 0, -1, ClientSession.class);
+//        return redisService.lrange(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, 0, -1, ClientSession.class);
 //    }
 //
 //    /**
@@ -221,7 +214,7 @@ public class FooloxUtils {
 //     * @param clientSession
 //     */
 //    public static void addRoomClientSession(String roomId, ClientSession clientSession) {
-//        redisService.lpush(GamePrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, clientSession);
+//        redisService.lpush(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, clientSession);
 //    }
 //
 //    /**
@@ -230,13 +223,13 @@ public class FooloxUtils {
 //     * @param userId
 //     */
 //    public static void removeSessionFromRoom(String roomId, String userId) {
-//        List<ClientSession> list = redisService.lrange(GamePrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, 0, -1, ClientSession.class);
+//        List<ClientSession> list = redisService.lrange(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, 0, -1, ClientSession.class);
 //        for (ClientSession session : list) {
 //            if (userId.equals(session.getUserId())) {
 //                list.remove(session);
 //            }
 //        }
-//        redisService.set(GamePrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, list);
+//        redisService.set(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, list);
 //    }
 //
 //    /**
@@ -246,7 +239,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void delRoomClientSessionList(String roomId) {
-//        redisService.del(GamePrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId);
+//        redisService.del(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId);
 //    }
 //
 //
@@ -272,7 +265,7 @@ public class FooloxUtils {
 //
 //
 ///*    public static Player getGameplayerBySessionId(String clientSessionId) {
-//        return redisService.get(GamePrefix.ROOM_CLIENTSESSIONID_GAMEPLAYER, clientSessionId, GamePlayer.class);
+//        return redisService.get(RoomPrefix.ROOM_CLIENTSESSIONID_GAMEPLAYER, clientSessionId, GamePlayer.class);
 //    }*/
 //
 //    /**
@@ -283,7 +276,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static Player getPlayerBySessionId(String clientSessionId) {
-//        return redisService.get(UserPrefix.PLAYER_CLIENTSESSIONID_PLAYER, clientSessionId, Player.class);
+//        return redisService.get(PlayerPrefix.PLAYER_CLIENTSESSIONID_PLAYER, clientSessionId, Player.class);
 //    }
 //
 //    /**
@@ -293,10 +286,10 @@ public class FooloxUtils {
 //     */
 //    public static GameRoom pollRoomFromQueue(String playwayId) {
 //        GameRoom gameRoom = null;
-//        Map<String, GameRoom> map = redisService.hgetAll(GamePrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, GameRoom.class);
+//        Map<String, GameRoom> map = redisService.hgetAll(RoomPrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, GameRoom.class);
 //        for (String s : map.keySet()) {
 //            GameRoom room = map.get(s);
-//            redisService.hdel(GamePrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, room.getId());
+//            redisService.hdel(RoomPrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, room.getId());
 //            List<ClientSession> clientSessions = FooloxUtils.getRoomClientSessionList(room.getId());
 //            if (clientSessions.size() < room.getMaxPlayerNum()) {
 //                gameRoom = room;
@@ -312,7 +305,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void removeRoomFromQueue(String playwayId, String roomId) {
-//        redisService.hdel(GamePrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, roomId);
+//        redisService.hdel(RoomPrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, roomId);
 //    }
 //
 //    /**
@@ -321,7 +314,7 @@ public class FooloxUtils {
 //     * @return
 //     */
 //    public static void addRoom2Queue(String playwayId, GameRoom gameRoom) {
-//        redisService.hset(GamePrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, gameRoom.getId(), gameRoom);
+//        redisService.hset(RoomPrefix.ROOM_PLAYWAY_GAMEROOM_LIST, playwayId, gameRoom.getId(), gameRoom);
 //    }
 //
 //    /**
@@ -330,7 +323,7 @@ public class FooloxUtils {
 //     * @return
 //     */
     public static String getTokenByUserId(String userId) {
-        return RedisUtil.get(UserPrefix.TOKEN, userId);
+        return RedisUtil.get(PlayerPrefix.USERID_TOKEN, userId);
     }
 //
 //    /**

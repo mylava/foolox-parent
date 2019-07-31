@@ -21,22 +21,22 @@ import java.util.Date;
 @NoArgsConstructor
 @Document(collection = "client_session")
 public class ClientSession implements DbEvent {
+    @Id
+    private String userId;
     /**
      * --------------- ---------------
      * 基本信息,与房间、游戏无关
      * --------------- ---------------
      */
-    @Id
-    private String id;
+
     private String token;
-    private String userId;
-    private String username;
+    private String nickname;
     //使用用户密码的MD5摘要，存储在客户端会话中
     private String password;
     //是否登录
     private boolean login;
     //socket是否在线
-    private boolean online=false;
+    private boolean online = false;
     //用户头像,空表示没有上传
     private String headimg;
     //会话创建时间
@@ -65,10 +65,10 @@ public class ClientSession implements DbEvent {
      */
     private String roomId;      //加入的房间ID
     private boolean roomready;  //在房间中已经准备就绪
-    private PlayerStatus playerStatus;    //玩家在游戏中的状态 ： READY : NOTREADY : PLAYING ：MANAGED/托管
+    private PlayerStatus playerStatus;    //玩家在游戏中的状态 ： LOGIN : NOTREADY : PLAYING ：MANAGED/托管
     private long playerindex;   //玩家进入房间的顺序
 
-    private boolean opendeal ;	//是否准备(同意开始)
+    private boolean opendeal;    //是否准备(同意开始)
 
 
 }

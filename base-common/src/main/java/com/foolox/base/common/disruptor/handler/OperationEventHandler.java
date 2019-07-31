@@ -15,13 +15,13 @@ public class OperationEventHandler implements EventHandler<OperationEvent> {
     @SuppressWarnings("unchecked")
     @Override
     public void onEvent(OperationEvent operationEvent, long sequence, boolean endOfBatch) throws Exception {
-        if(DbEventType.SAVE == operationEvent.getDbEventType()){
-            if(operationEvent.getRepository()!=null){
-                operationEvent.getRepository().save(operationEvent.getDbEvent()) ;
+        if (DbEventType.SAVE == operationEvent.getDbEventType()) {
+            if (operationEvent.getRepository() != null) {
+                operationEvent.getRepository().save(operationEvent.getDbEvent());
             }
-        }else if(DbEventType.DELETE == operationEvent.getDbEventType()){
-            if(operationEvent.getRepository()!=null){
-                operationEvent.getRepository().delete(operationEvent.getDbEvent()) ;
+        } else if (DbEventType.DELETE == operationEvent.getDbEventType()) {
+            if (operationEvent.getRepository() != null) {
+                operationEvent.getRepository().delete(operationEvent.getDbEvent());
             }
         }
     }

@@ -9,11 +9,17 @@ import java.lang.reflect.Method;
  * @date: 16/07/2019
  */
 public class CmdExecutor {
-    /** logic handler method */
+    /**
+     * logic handler method
+     */
     private Method method;
-    /** arguments passed to method */
+    /**
+     * arguments passed to method
+     */
     private Class<?>[] params;
-    /** logic facade */
+    /**
+     * logic facade
+     */
     private Object handler;
 
     public static CmdExecutor valueOf(Method method, Class<?>[] params, Object handler) {

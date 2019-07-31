@@ -21,13 +21,13 @@ public class IOServer {
     private ServerGroupContext serverGroupContext;
 
 
-    public IOServer(int port, IWsMsgHandler wsMsgHandler) throws IOException {
+    public IOServer(int port, IWsMsgHandler wsMsgHandler, Long timeout) throws IOException {
         wsServerStarter = new WsServerStarter(port, wsMsgHandler);
         serverGroupContext = wsServerStarter.getServerGroupContext();
         //协议名字
         serverGroupContext.setName("fooloxGame");
         //设置心跳超时时间 10分钟
-        serverGroupContext.setHeartbeatTimeout(600*1000);
+        serverGroupContext.setHeartbeatTimeout(timeout);
         //设置AIO监听，用于管理Session
         serverGroupContext.setServerAioListener(SessionManager.instance);
     }

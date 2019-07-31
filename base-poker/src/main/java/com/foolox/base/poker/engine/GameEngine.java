@@ -1,15 +1,8 @@
 package com.foolox.base.poker.engine;
 
-import com.foolox.base.constant.poker.PlayerStatus;
-import com.foolox.base.db.domain.ClientSession;
-import com.foolox.base.poker.game.GameRoom;
+import com.foolox.base.poker.model.GameRoom;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * comment:
@@ -18,7 +11,7 @@ import java.util.List;
  * @date: 20/05/2019
  */
 @Slf4j
-@Service
+@Component
 public class GameEngine {
     /**
      * 解散房间 , 解散的时候，需要验证下，当前对象是否是房间的创建人
@@ -40,7 +33,7 @@ public class GameEngine {
 //             * 举手了，表示游戏可以开始了
 //             */
 //            if (clientSession != null) {
-//                clientSession.setPlayerStatus(PlayerStatus.READY);
+//                clientSession.setPlayerStatus(PlayerStatus.LOGIN);
 //            }
 //
 //            /**
@@ -103,7 +96,7 @@ public class GameEngine {
 //        //通过userId取出roomID，如果用户不在房间内，则为空
 //        String roomId = FooloxUtils.getRoomIdByUserId(userId);
 //        //通过传入的 playwayId 从系统配置中取出玩法
-//        Playway playway = FooloxUtils.getGamePlaywayById(playwayId);
+//        PlaywayMeta playway = FooloxUtils.getGamePlaywayById(playwayId);
 //        boolean needtakequene = false;
 //        //如果不为空，则进行后续操作；为空表示参数传递错误
 //        if (playway != null) {
@@ -198,7 +191,7 @@ public class GameEngine {
 //     * @param fooloxClient
 //     * @return
 //     */
-//    private GameRoom createGameRoom(Playway playway, String userid, boolean cardroom, FooloxClient fooloxClient) {
+//    private GameRoom createGameRoom(PlaywayMeta playway, String userid, boolean cardroom, FooloxClient fooloxClient) {
 //        GameRoom gameRoom = new GameRoom();
 //        /**
 //         * 产生房间ID，麻烦的是需要处理冲突 ，准备采用的算法是 先生成一个号码池子，然后从分布是缓存的 Queue里获取
@@ -269,7 +262,7 @@ public class GameEngine {
 //        }
 //        if (!inroom) {
 //            clientSession.setPlayerindex(System.currentTimeMillis());
-//            clientSession.setPlayerStatus(PlayerStatus.READY);
+//            clientSession.setPlayerStatus(PlayerStatus.LOGIN);
 //            clientSession.setPlayerType(PlayerType.NORMAL);
 //            clientSession.setRoomId(gameRoom.getId());
 //            clientSession.setRoomready(false);
@@ -529,7 +522,7 @@ public class GameEngine {
 //                } else if (!StringUtils.isBlank(action) && action.equals(MJAction.HU.toString())) {    //判断下是不是 真的胡了 ，避免外挂乱发的数据
 //                    Action playerAction = new Action(userid, action, card);
 //                    player.getActions().add(playerAction);
-//                    Playway playway = FooloxUtils.getGamePlaywayById(gameRoom.getPlaywayInfo().getPlaywayId());
+//                    PlaywayMeta playway = FooloxUtils.getGamePlaywayById(gameRoom.getPlaywayInfo().getPlaywayId());
 //                    /**
 //                     * 不同的胡牌方式，处理流程不同，推倒胡，直接进入结束牌局 ， 血战：当前玩家结束牌局，血流：继续进行，下一个玩家
 //                     */

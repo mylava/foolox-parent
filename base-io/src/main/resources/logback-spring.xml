@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration  scan="true" scanPeriod="10 seconds" debug="false">
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
     <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
     <contextName>logback</contextName>
-    
+
     <!-- name的值是变量的名称，value是值变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
-    <property name="log.base" value="logs" /> <!--使用相对目录-->
+    <property name="log.base" value="logs"/> <!--使用相对目录-->
 
     <!-- 彩色日志格式 -->
 
@@ -18,7 +18,8 @@
     <!--green-->
     <!--red-->
     <!--yellow-->
-    <property name="CONSOLE_LOG_PATTERN" value="%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%green(%thread)] %highlight(%-5level) %blue(%logger{36} [%file: %line]) - %cyan(%msg%n)"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%green(%thread)] %highlight(%-5level) %blue(%logger{36} [%file: %line]) - %cyan(%msg%n)"/>
 
     <!--输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -147,10 +148,7 @@
      -->
 
 
-
-
-
-    <logger name="com.foolox" level="info" />
+    <logger name="com.foolox" level="info"/>
 
     <logger name="org.springframework.data.mongodb.core" level="DEBUG"/>
     <!--开发环境:打印控制台-->
@@ -171,10 +169,10 @@
     <!--</springProfile>-->
 
     <root level="debug">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="DEBUG_FILE" />
-        <appender-ref ref="INFO_FILE" />
-        <appender-ref ref="WARN_FILE" />
-        <appender-ref ref="ERROR_FILE" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DEBUG_FILE"/>
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="WARN_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
     </root>
 </configuration>

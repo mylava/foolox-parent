@@ -1,7 +1,6 @@
 package com.foolox.base.io.sender;
 
-import com.foolox.base.common.result.OutMessage;
-import com.foolox.base.io.input.Message;
+import com.foolox.base.constant.result.CommonMessage;
 import com.foolox.base.io.session.SessionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.tio.core.Tio;
@@ -19,7 +18,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class MessageSender {
-    public static void sendToUser(String userId, OutMessage msg) {
+    public static void sendToUser(String userId, CommonMessage msg) {
         try {
             log.info("send to client: userId={}, message={}", userId, msg);
             //Event使用cmd代替
@@ -30,13 +29,12 @@ public class MessageSender {
     }
 
 
-
     /**
      * @param message
      * @return
      * @throws IOException
      */
-    private static WsResponse convertToTextResponse(OutMessage message) throws IOException {
+    private static WsResponse convertToTextResponse(CommonMessage message) throws IOException {
         WsResponse response = new WsResponse();
         if (message != null) {
             String json = Json.toJson(message);

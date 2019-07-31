@@ -29,18 +29,20 @@ public class SessionManager extends WsServerAioListener {
 
     /**
      * 握手成功后，保存会话
+     *
      * @param playerId
      * @param groupContext
      * @return
      */
     public boolean registerSession(String playerId, GroupContext groupContext) {
         player2Context.put(playerId, groupContext);
-        log.info("[{}] registered...", playerId);
+        log.info("player [{}] registered...", playerId);
         return true;
     }
 
     /**
      * 断开连接前，删除会话
+     *
      * @param channelContext
      * @param throwable
      * @param remark

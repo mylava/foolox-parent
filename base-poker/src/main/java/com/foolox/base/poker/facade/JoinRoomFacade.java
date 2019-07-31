@@ -1,9 +1,10 @@
 package com.foolox.base.poker.facade;
 
-import com.foolox.base.constant.annotation.MessageMapping;
-import com.foolox.base.poker.message.in.JoinRoomMessage;
+import com.alibaba.fastjson.JSONObject;
+import com.foolox.base.constant.annotation.Facade;
+import com.foolox.base.constant.annotation.MessageEvent;
+import com.foolox.base.io.handler.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 
 /**
  * comment:
@@ -12,11 +13,11 @@ import org.springframework.stereotype.Controller;
  * @date: 28/07/2019
  */
 @Slf4j
-@Controller
-public class JoinRoomFacade {
+@Facade(MessageEvent.JOIN_ROOM)
+public class JoinRoomFacade extends MessageHandler {
 
-    @MessageMapping
-    public void joinRoom(String userId, JoinRoomMessage message) {
+    @Override
+    public void execute(String userId, JSONObject message) {
         log.info("{},{}", userId, message);
 //        MessageSender.sendToUser(userId,"hello",message);
     }

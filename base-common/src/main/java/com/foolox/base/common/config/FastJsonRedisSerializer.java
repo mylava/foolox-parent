@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.SerializationException;
 import java.nio.charset.Charset;
 
 /**
- * comment: redis 序列化
+ * comment: rediskey 序列化
  *
  * @author: lipengfei
  * @date: 08/06/2019

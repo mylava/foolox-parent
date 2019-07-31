@@ -1,5 +1,6 @@
 package com.foolox.base.common.disruptor.event;
 
+import com.foolox.base.constant.disruptor.DbEvent;
 import lombok.Data;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

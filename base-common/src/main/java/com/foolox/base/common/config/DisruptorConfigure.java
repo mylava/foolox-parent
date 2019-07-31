@@ -22,11 +22,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Configuration
 public class DisruptorConfigure {
 
-    @Bean(name="disruptor")
+    @Bean(name = "disruptor")
     public Disruptor<OperationEvent> disruptor() {
         //创建线程池
         ThreadFactory threadFactory = new ThreadFactory() {
             private final AtomicInteger index = new AtomicInteger(1);
+
             @Override
             public Thread newThread(Runnable runnable) {
                 return new Thread(null, runnable, "disruptor-thread-" + index.getAndIncrement());
@@ -35,7 +36,7 @@ public class DisruptorConfigure {
         //创建事件工厂
         OperationEventFactory factory = new OperationEventFactory();
         //创建Disruptor
-        Disruptor<OperationEvent> disruptor = new Disruptor<OperationEvent>(factory,1024,threadFactory,ProducerType.SINGLE,new SleepingWaitStrategy());
+        Disruptor<OperationEvent> disruptor = new Disruptor<OperationEvent>(factory, 1024, threadFactory, ProducerType.SINGLE, new SleepingWaitStrategy());
         //添加异常处理器
         disruptor.setDefaultExceptionHandler(new DisruptorExceptionHandler());
         //添加事件处理器

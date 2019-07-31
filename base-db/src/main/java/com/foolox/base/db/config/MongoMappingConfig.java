@@ -17,13 +17,13 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 public class MongoMappingConfig {
     @Bean
     public MappingMongoConverter mappingMongoConverter(MongoDbFactory factory,
-                                                       MongoMappingContext context, BeanFactory beanFactory){
+                                                       MongoMappingContext context, BeanFactory beanFactory) {
         DbRefResolver dbRefResolver = new DefaultDbRefResolver(factory);
-        MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver,context);
-        try{
+        MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, context);
+        try {
             converter.setCustomConversions(beanFactory.getBean(MongoCustomConversions.class));
 //            converter.setCustomConversions(beanFactory.getBean(CustomConversions.class));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //don't save column _class to mongo collection
