@@ -1,12 +1,10 @@
 package com.foolox.base.db.domain;
 
 import com.foolox.base.constant.disruptor.DbEvent;
-import com.foolox.base.constant.poker.PlayerStatus;
+import com.foolox.base.constant.game.PlayerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
@@ -19,10 +17,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "client_session")
 public class ClientSession implements DbEvent {
-    @Id
-    private String userId;
+    private long userId;
     /**
      * --------------- ---------------
      * 基本信息,与房间、游戏无关

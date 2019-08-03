@@ -34,7 +34,7 @@ public class MessageDispatcher {
      * @param command
      * @param message
      */
-    public void dispatch(String userId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
+    public void dispatch(Long userId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
         CmdExecutor cmdExecutor = COMMAND_HANDLERS.get(command);
         if (cmdExecutor == null) {
             log.error("message executor missed, command={}", command);
@@ -53,12 +53,12 @@ public class MessageDispatcher {
      * @param message
      * @return
      */
-    private Object[] convertToMethodParams(String userId, Class<?>[] methodParams, JSONObject message) {
+    private Object[] convertToMethodParams(Long userId, Class<?>[] methodParams, JSONObject message) {
         Object[] result = new Object[methodParams == null ? 0 : methodParams.length];
 
         for (int i = 0; i < result.length; i++) {
             Class<?> param = methodParams[i];
-            if (String.class.isAssignableFrom(param)) {
+            if (Long.class.isAssignableFrom(param)) {
                 result[i] = userId;
             } else if (JSONObject.class.isAssignableFrom(param)) {
                 result[i] = message;

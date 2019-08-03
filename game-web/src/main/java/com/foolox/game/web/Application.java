@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.IOException;
  */
 @Slf4j
 @EnableScheduling
-@EnableMongoRepositories(basePackages = {"com.foolox.base.db"})
 @ComponentScan(basePackages = {"com.foolox.game.web", "com.foolox.base.common"})
 @SpringBootApplication
 public class Application {

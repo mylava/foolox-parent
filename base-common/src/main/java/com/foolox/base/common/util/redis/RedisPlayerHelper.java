@@ -1,7 +1,7 @@
 package com.foolox.base.common.util.redis;
 
 import com.foolox.base.common.util.RedisUtil;
-import com.foolox.base.constant.poker.PlayerStatus;
+import com.foolox.base.constant.game.PlayerStatus;
 
 import static com.foolox.base.constant.rediskey.PlayerPrefix.USERID_FIELD;
 import static com.foolox.base.constant.rediskey.PlayerPrefix.USERID_TOKEN;
@@ -15,6 +15,8 @@ import static com.foolox.base.constant.rediskey.PlayerPrefix.USERID_TOKEN;
 public class RedisPlayerHelper {
 
     private static final String STATUS = "status";
+    private static final String HEAD_IMG = "headImg";
+    private static final String NICKNAME = "nickname";
 
     /**
      * 保存用户token
@@ -22,8 +24,8 @@ public class RedisPlayerHelper {
      * @param userId
      * @param token
      */
-    public static void saveToken(String userId, String token) {
-        RedisUtil.set(USERID_TOKEN, userId, token);
+    public static void saveToken(Long userId, String token) {
+        RedisUtil.set(USERID_TOKEN, userId.toString(), token);
     }
 
     /**
@@ -31,8 +33,8 @@ public class RedisPlayerHelper {
      *
      * @param userId
      */
-    public static String getToken(String userId) {
-        return RedisUtil.get(USERID_TOKEN, userId);
+    public static String getToken(Long userId) {
+        return RedisUtil.get(USERID_TOKEN, userId.toString());
     }
 
     /**
@@ -41,10 +43,10 @@ public class RedisPlayerHelper {
      *
      * @param userId
      */
-    public static void expireToken(String userId) {
-        if (RedisUtil.exists(USERID_TOKEN, userId)
-                && (RedisUtil.getExpireTime(USERID_TOKEN, userId) < 3600)) {
-            RedisUtil.expire(USERID_TOKEN, userId, USERID_TOKEN.getExpire());
+    public static void expireToken(Long userId) {
+        if (RedisUtil.exists(USERID_TOKEN, userId.toString())
+                && (RedisUtil.getExpireTime(USERID_TOKEN, userId.toString()) < 3600)) {
+            RedisUtil.expire(USERID_TOKEN, userId.toString(), USERID_TOKEN.getExpire());
         }
     }
 
@@ -53,10 +55,53 @@ public class RedisPlayerHelper {
      * @param userId
      * @return
      */
-    public static PlayerStatus getPlayerStatus(String userId) {
-        String value = RedisUtil.hget(USERID_FIELD, userId, STATUS, String.class);
+    public static PlayerStatus getPlayerStatus(Long userId) {
+        String value = RedisUtil.hget(USERID_FIELD, userId.toString(), STATUS, String.class);
         return PlayerStatus.nameOf(value);
     }
 
+    /**
+     * 设置用户状态
+     * @param userId
+     * @return
+     */
+    public static void setPlayerStatus(Long userId, String status) {
+        RedisUtil.hset(USERID_FIELD, userId.toString(), STATUS, status);
+    }
 
+    /**
+     * 获取用户头像
+     * @param userId
+     * @return
+     */
+    public static String getHeadImg(Long userId) {
+        return RedisUtil.hget(USERID_FIELD, userId.toString(), HEAD_IMG, String.class);
+    }
+
+    /**
+     * 设置用户头像
+     * @param userId
+     * @return
+     */
+    public static void setHeadImg(Long userId, String headImg) {
+        RedisUtil.hset(USERID_FIELD, userId.toString(), HEAD_IMG, headImg);
+    }
+
+    /**
+     * 获取用户头像
+     * @param userId
+     * @return
+     */
+    public static String getNickname(Long userId) {
+        return RedisUtil.hget(USERID_FIELD, userId.toString(), NICKNAME, String.class);
+    }
+
+    /**
+     * 设置用户头像
+     * @param userId
+     * @return
+     */
+    public static void setNickname(Long userId, String nickname) {
+        RedisUtil.hset(USERID_FIELD, userId.toString(), NICKNAME, nickname);
+    }
 }

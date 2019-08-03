@@ -1,29 +1,29 @@
 package test;
 
-import com.foolox.base.db.dao.PlayerRepository;
-import com.foolox.base.db.domain.Player;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * comment:
  *
  * @author: lipengfei
- * @date: 05/05/2019
+ * @date: 25/07/2019
  */
 @Slf4j
+@EnableScheduling
 @ComponentScan(basePackages = {"com.foolox.base.db", "test"})
+@EnableJpaRepositories(basePackages = {"com.foolox.base.db.dao"})
+@EntityScan(basePackages = {"com.foolox.base.db.domain"})
 @SpringBootApplication
 public class Application {
-    public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
-        PlayerRepository playerRepository = ctx.getBean(PlayerRepository.class);
-        List<Player> all = playerRepository.findAll();
-        log.info("player= {}", all);
+    public static void main(String[] args) throws IOException {
+        SpringApplication.run(Application.class, args);
     }
 }

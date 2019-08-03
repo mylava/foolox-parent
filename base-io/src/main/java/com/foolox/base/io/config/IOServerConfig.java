@@ -1,6 +1,7 @@
 package com.foolox.base.io.config;
 
 import com.foolox.base.common.loadbalance.MachineInfo;
+import com.foolox.base.common.util.FooloxUtils;
 import com.foolox.base.constant.loadbalance.MachineStatus;
 import com.foolox.base.common.util.IpAddrUtil;
 import com.foolox.base.common.util.RedisUtil;
@@ -37,10 +38,6 @@ public class IOServerConfig {
     @Resource
     private IOEventHandler handler;
 
-    private static final String IP = IpAddrUtil.getInnetIp();
-    // GameType + IP + 当前进程id
-    private String machineId = IP + ":" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
-
     @Bean
     public IOServer socketIOServer() throws IOException {
         IOServer server = new IOServer(port, handler, timeout);
@@ -55,12 +52,12 @@ public class IOServerConfig {
     @Scheduled(fixedRate = MachineHeart.REDIS_MACHINE_HEART_RATE, initialDelay = 10000)
     public void task() {
         log.info("--------loadbalance task-------------------");
-        MachineInfo machineInfo = RedisUtil.get(LoadBalancePrefix.MACHINE, machineId, MachineInfo.class);
+        MachineInfo machineInfo = RedisUtil.get(LoadBalancePrefix.MACHINE, FooloxUtils.MACHINE_ID, MachineInfo.class);
         if (null == machineInfo) {
             machineInfo = new MachineInfo();
-            machineInfo.setMachineId(machineId);
+            machineInfo.setMachineId(FooloxUtils.MACHINE_ID);
             machineInfo.setStatus(MachineStatus.RUNNING);
-            machineInfo.setIp(IP);
+            machineInfo.setIp(FooloxUtils.IP);
             machineInfo.setPort(port);
             machineInfo.setStartupTime(System.currentTimeMillis());
             machineInfo.setWeiget(10);
@@ -72,6 +69,6 @@ public class IOServerConfig {
         }
 
         machineInfo.setLastUpdateTime(System.currentTimeMillis());
-        RedisUtil.set(LoadBalancePrefix.MACHINE, machineId, machineInfo);
+        RedisUtil.set(LoadBalancePrefix.MACHINE, FooloxUtils.MACHINE_ID, machineInfo);
     }
 }

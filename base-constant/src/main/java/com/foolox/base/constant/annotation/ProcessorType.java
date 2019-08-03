@@ -12,7 +12,8 @@ public enum ProcessorType {
     //普通房间
     COMMON_ROOM,
     //俱乐部房间
-    CLUB_ROOM,;
+    CLUB_ROOM,
+    ;
 
     @Override
     public String toString() {

@@ -1,17 +1,16 @@
 package com.foolox.game.web.service;
 
-import com.foolox.base.constant.result.CodeMessage;
 import com.foolox.base.common.util.redis.RedisPlayerHelper;
+import com.foolox.base.constant.game.PlayerStatus;
+import com.foolox.base.constant.result.CodeMessage;
+import com.foolox.base.constant.result.Result;
 import com.foolox.base.db.dao.PlayerRepository;
 import com.foolox.base.db.domain.Player;
 import com.foolox.game.web.jwt.JwtUtils;
-import com.foolox.base.constant.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * comment:
@@ -25,16 +24,8 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public Player findPlayerById(String id) {
+    public Player findPlayerById(long id) {
         return playerRepository.findById(id).get();
-    }
-
-    public Player save(Player player) {
-        return playerRepository.save(player);
-    }
-
-    public List<Player> queryAll() {
-        return playerRepository.findAll();
     }
 
     /**
@@ -48,7 +39,7 @@ public class PlayerService {
         Example<Player> example = Example.of(probe);
         Player dbPlayer = null;
         try {
-            dbPlayer = playerRepository.findOne(example).get();
+//            dbPlayer = playerRepository.f(example).get();
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -61,14 +52,18 @@ public class PlayerService {
             return Result.fail(CodeMessage.LOGIN_PASSWORD_INCORRECT);
         }
         //用户被冻结
-        if (dbPlayer.getState()==0) {
+        if (dbPlayer.getStatus()==0) {
             return Result.fail(CodeMessage.LOGIN_STATE_INCORRECT);
         }
 
         String token = JwtUtils.createJWT(dbPlayer);
 
+        //STAY 放入缓存改为异步保存
         //token放入缓存
         RedisPlayerHelper.saveToken(dbPlayer.getId(), token);
+        RedisPlayerHelper.setHeadImg(dbPlayer.getId(), dbPlayer.getHeadimg());
+        RedisPlayerHelper.setNickname(dbPlayer.getId(), dbPlayer.getNickname());
+        RedisPlayerHelper.setPlayerStatus(dbPlayer.getId(), PlayerStatus.IDLE.toString());
 
 //        //生成clientSession
 //        ClientSession clientSession = new ClientSession();

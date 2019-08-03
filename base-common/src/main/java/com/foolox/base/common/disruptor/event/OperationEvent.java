@@ -2,7 +2,7 @@ package com.foolox.base.common.disruptor.event;
 
 import com.foolox.base.constant.disruptor.DbEvent;
 import lombok.Data;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * comment: 数据库操作事件
@@ -18,5 +18,6 @@ public class OperationEvent {
     //命令
     private DbEventType dbEventType;
     //dao
-    private MongoRepository repository;
+    private CrudRepository repository;
+
 }

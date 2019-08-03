@@ -1,10 +1,4 @@
-#server:
-#  port: 8000
 spring:
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/foolox_game
-  #rediskey
   redis:
     host: 127.0.0.1
     port: 6379
@@ -18,15 +12,6 @@ spring:
         max-wait: 500
         max-active: 1000
 
-#logging:
-#  config:
-##logging:
-##  level: debug cn.mylava.seckill.dao
-#
-#
-#
-#
-
 foolox:
   ioServer:
     port: 9000
@@ -35,6 +20,8 @@ foolox:
     machineType: bullfight
   test:
     checkAuth: false
+
+
 
 
 

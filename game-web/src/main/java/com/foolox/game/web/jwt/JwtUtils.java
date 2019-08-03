@@ -89,9 +89,9 @@ public class JwtUtils {
                 //设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
                 .setId(UUID.randomUUID().toString())
                 //代表这个JWT的主题，即它的所有人，这个是一个json格式的字符串，可以存放什么userid，roldid之类的，作为什么用户的唯一标志。
-                .setSubject(player.getId())
+//                .setSubject(player.getId())
                 // 签发者
-                .setIssuer("foolox.model")
+                .setIssuer("foolox.domain")
                 // 签发时间
                 .setIssuedAt(now)
                 // 签名算法以及密匙,密匙使用用户的密码
@@ -162,7 +162,7 @@ public class JwtUtils {
 
     public static void main(String[] args) {
         Player player = new Player();
-        player.setId("111");
+        player.setId(111);
         player.setUsername("222");
         player.setPassword("333");
         String jwt = JwtUtils.createJWT(player);

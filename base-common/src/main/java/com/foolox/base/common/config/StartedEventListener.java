@@ -1,6 +1,6 @@
 package com.foolox.base.common.config;
 
-import com.foolox.base.common.util.ContextUtil;
+import com.foolox.base.common.util.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +21,9 @@ public class StartedEventListener implements ApplicationListener<ContextRefreshe
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if (ContextUtil.getApplicationContext() == null) {
-            ContextUtil.setApplicationContext(event.getApplicationContext());
+        if (SpringContextUtil.getApplicationContext() == null) {
+            SpringContextUtil.setApplicationContext(event.getApplicationContext());
         }
-        log.info("set ContextUtil [{}]", ContextUtil.getApplicationContext());
+        log.info("set SpringContextUtil [{}]", SpringContextUtil.getApplicationContext());
     }
 }

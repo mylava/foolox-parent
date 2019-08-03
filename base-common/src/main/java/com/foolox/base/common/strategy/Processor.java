@@ -33,5 +33,5 @@ public abstract class Processor {
         return new CommonMessage<T>(this.getCommand(), code, message);
     }
 
-    public abstract void process(String userId, JSONObject param);
+    public abstract void process(Long userId, JSONObject param);
 }

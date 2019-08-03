@@ -22,17 +22,17 @@ public class RoomPrefix extends BasePrefix{
 
     //getRoomMappingCacheBean
     //进入房间的用户Id 与 gameRoomId的对应关系 key(userId -- gameroomId)
-    public static final RoomPrefix USERID_GAMEROOMID = new RoomPrefix("room:userId:roomId");
+    public static final RoomPrefix USERID_GAMEROOMNO = new RoomPrefix("room:userId:roomNo");
 
     //getGameRoomCacheBean
     //RoomId 与 GameRoom 的对应关系 key(RoomId -- GameRoom)
-    public static final RoomPrefix ROOM_ROOMID_GAMEROOM = new RoomPrefix("room:roomId:gameroom");
+    public static final RoomPrefix ROOMNO_GAMEROOM = new RoomPrefix("room:roomNo:gameroom");
     //getQueneCache()
     //玩法 与 房间列表 的对应关系，用于匹配房间
     public static final RoomPrefix ROOM_PLAYWAY_GAMEROOM_LIST = new RoomPrefix("room:playwayId:gameroom_list");
 
     //getBoardCacheBean roomId -- board
-    public static final RoomPrefix ROOM_ROOMID_BOARD = new RoomPrefix("room:roomId:board");
+    public static final RoomPrefix ROOM_ROOMID_BOARD = new RoomPrefix("room:roomNo:board");
 
     //PlayUserESRepository clientsessionid -- gameplayer
 //    public static final RoomPrefix ROOM_CLIENTSESSIONID_GAMEPLAYER = new RoomPrefix("room:clientsessionid:gameplayer");

@@ -41,6 +41,7 @@ public class MachineController {
                 continue;
             }
             data = machineInfo;
+            break;
         }
         if (null==data) {
             return Result.fail(CodeMessage.GAME_SERVER_UNAVAILABLE_ERROR);

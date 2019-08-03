@@ -1,15 +1,11 @@
 package com.foolox.base.common.util;
 
 
-import com.foolox.base.common.disruptor.event.DbEventType;
-import com.foolox.base.common.disruptor.event.OperationEvent;
-import com.foolox.base.constant.disruptor.DbEvent;
 import com.foolox.base.constant.rediskey.PlayerPrefix;
 import com.foolox.base.constant.rediskey.RoomPrefix;
 import com.foolox.base.db.domain.ClientSession;
-import com.lmax.disruptor.dsl.Disruptor;
-import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.lang.management.ManagementFactory;
 import java.util.UUID;
 
 /**
@@ -30,49 +26,9 @@ public class FooloxUtils {
         return md5.getMD5ofStr(md5.getMD5ofStr(str));
     }
 
-    /**
-     * 异步保存DbEvent 到数据库
-     *
-     * @param event
-     * @param mongoRepository
-     */
-    public static void published(DbEvent event, MongoRepository mongoRepository) {
-        published(event, mongoRepository, DbEventType.SAVE);
-    }
-
-    /**
-     * 异步操作UserEvent数据库
-     *
-     * @param event
-     * @param mongoRepository
-     * @param dbEventType
-     */
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    private static void published(DbEvent event, MongoRepository mongoRepository, DbEventType dbEventType) {
-        Disruptor<OperationEvent> disruptor = (Disruptor<OperationEvent>) ContextUtil.getApplicationContext().getBean("disruptor");
-        long seq = disruptor.getRingBuffer().next();
-        OperationEvent operationEvent = disruptor.getRingBuffer().get(seq);
-        operationEvent.setDbEvent(event);
-        operationEvent.setRepository(mongoRepository);
-        operationEvent.setDbEventType(dbEventType);
-        disruptor.getRingBuffer().publish(seq);
-    }
-
-    /**
-     * 生成length长度的随机数
-     *
-     * @param length
-     * @return
-     */
-    public static String getRandomNumberChar(int length) {
-        if (length > 1) {
-            double random = (Math.random() * 9 + 1);
-            int pow = (int) Math.pow(10d, length - 1);
-            return String.valueOf((int) (random * pow));
-        }
-        return null;
-    }
-
+    public static final String IP = IpAddrUtil.getInnetIp();
+    // IP + 当前进程id
+    public static final String MACHINE_ID = IP + ":" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
 
     /**
      * 通过 userId 获取 ClientSession
@@ -80,8 +36,8 @@ public class FooloxUtils {
      * @param userId
      * @return
      */
-    public static ClientSession getClientSessionById(String userId) {
-        return RedisUtil.get(PlayerPrefix.USERID_SESSION, userId, ClientSession.class);
+    public static ClientSession getClientSessionById(Long userId) {
+        return RedisUtil.get(PlayerPrefix.USERID_SESSION, userId.toString(), ClientSession.class);
     }
 
     /**
@@ -89,16 +45,19 @@ public class FooloxUtils {
      *
      * @param userId
      */
-    public static void setClientSessionById(String userId, ClientSession clientSession) {
-        RedisUtil.set(PlayerPrefix.USERID_SESSION, userId, clientSession);
+    public static void setClientSessionById(Long userId, ClientSession clientSession) {
+        RedisUtil.set(PlayerPrefix.USERID_SESSION, userId.toString(), clientSession);
     }
+
+
+
 //
 //    /**
 //     * 从缓存中删除 UserId 与 ClientSession 映射关系
 //     *
 //     * @param userId
 //     */
-//    public static void delClientSessionById(String userId) {
+//    public static void delClientSessionById(Long userId) {
 //        redisService.del(PlayerPrefix.USERID_SESSION, userId);
 //    }
 //
@@ -144,8 +103,8 @@ public class FooloxUtils {
 //     * @param gameRoomId
 //     * @return
 //     */
-//    public static void setRoomIdByUserId(String userId, String gameRoomId) {
-//        redisService.set(RoomPrefix.USERID_GAMEROOMID, userId, gameRoomId);
+//    public static void setRoomIdByUserId(Long userId, String gameRoomId) {
+//        redisService.set(RoomPrefix.USERID_GAMEROOMNO, userId, gameRoomId);
 //    }
 //
 //    /**
@@ -154,20 +113,12 @@ public class FooloxUtils {
 //     * @param userId
 //     * @return
 //     */
-//    public static void delRoomIdByUserId(String userId) {
-//        redisService.del(RoomPrefix.USERID_GAMEROOMID, userId);
+//    public static void delRoomIdByUserId(Long userId) {
+//        redisService.del(RoomPrefix.USERID_GAMEROOMNO, userId);
 //    }
 //
-    /**
-     * 通过 roomId 获取 GameRoom
-     *
-     * @param roomId
-     * @return
-     */
-    public static <T> T getRoomById(String roomId, Class<T> clazz) {
-        return RedisUtil.get(RoomPrefix.ROOM_ROOMID_GAMEROOM, roomId, clazz);
-    }
-//
+
+    //
 //    /**
 //     * 保存 roomId 与 GameRoom 映射关系到缓存
 //     *
@@ -222,7 +173,7 @@ public class FooloxUtils {
 //     * @param roomId
 //     * @param userId
 //     */
-//    public static void removeSessionFromRoom(String roomId, String userId) {
+//    public static void removeSessionFromRoom(String roomId, Long userId) {
 //        List<ClientSession> list = redisService.lrange(RoomPrefix.ROOM_ROOMID_CLIENTSESSION_LIST, roomId, 0, -1, ClientSession.class);
 //        for (ClientSession session : list) {
 //            if (userId.equals(session.getUserId())) {
@@ -322,8 +273,8 @@ public class FooloxUtils {
 //     * @param userId
 //     * @return
 //     */
-    public static String getTokenByUserId(String userId) {
-        return RedisUtil.get(PlayerPrefix.USERID_TOKEN, userId);
+    public static String getTokenByUserId(Long userId) {
+        return RedisUtil.get(PlayerPrefix.USERID_TOKEN, userId.toString());
     }
 //
 //    /**

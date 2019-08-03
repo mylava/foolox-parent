@@ -3,6 +3,8 @@ package com.foolox.base.common.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.foolox.base.constant.rediskey.KeyPrefix;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.*;
@@ -14,10 +16,11 @@ import java.util.concurrent.TimeUnit;
  * @author: lipengfei
  * @date: 26/07/2019
  */
+@Slf4j
 public class RedisUtil {
     private static final String EMPT_STRING = "";
     @SuppressWarnings("unchecked")
-    private static RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) ContextUtil.getApplicationContext().getBean("redisTemplate");
+    private static RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) SpringContextUtil.getApplicationContext().getBean("redisTemplate");
 
     /**
      * --------------- ---------------
@@ -386,6 +389,44 @@ public class RedisUtil {
         Set<String> keySet = redisTemplate.keys(keys);
         return (List<T>) redisTemplate.opsForValue().multiGet(keySet);
     }
+
+    /**
+     * 使用setnx 锁定key
+     *
+     * @param key
+     * @param seconds
+     *            锁定的时间
+     * @return 成功true,失败false
+     */
+    public static boolean lockKey(KeyPrefix prefix, String key, int seconds) {
+        boolean getLockSuccess = false;
+        int i = 0;
+        BoundValueOperations op = redisTemplate.boundValueOps(prefix.getPrefix()+key);
+        while (!getLockSuccess) {
+            i++;
+            getLockSuccess = op.setIfAbsent(1);
+            // 拿到锁，则返回,如果超过10次未能获取到锁，则不再去获取
+            if (getLockSuccess || i > 10) {
+                break;
+            } else {
+                // 过20毫秒再来拿一次
+                log.info("can not lock key:" + key + ", will be get it next 20ms");
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (getLockSuccess) {
+            op.expire(seconds, TimeUnit.SECONDS);
+        } else {
+            log.info("can not lock key:" + key);
+        }
+        return getLockSuccess;
+
+    }
+
 
     private <T> String bean2JsonString(T value) {
         if (null == value) {

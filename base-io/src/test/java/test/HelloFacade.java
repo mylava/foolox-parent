@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloFacade extends MessageHandler {
 
     @Override
-    public void execute(String userId, JSONObject message) {
+    public void execute(Long userId, JSONObject message) {
         log.info("{},{}", userId, message);
 //        MessageSender.sendToUser(userId,"hello",message);
     }

@@ -5,10 +5,10 @@ import com.foolox.base.common.util.FooloxUtils;
 import com.foolox.base.common.util.redis.RedisRoomHelper;
 import com.foolox.base.constant.annotation.Facade;
 import com.foolox.base.constant.annotation.MessageEvent;
-import com.foolox.base.constant.poker.PlayerStatus;
+import com.foolox.base.constant.game.PlayerStatus;
 import com.foolox.base.io.handler.MessageHandler;
 import com.foolox.base.io.sender.MessageSender;
-import com.foolox.base.poker.model.GameRoom;
+import com.foolox.game.niuniu.model.GameRoom;
 import com.foolox.base.poker.message.GameStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 public class GameStatusFacade extends MessageHandler {
 
     @Override
-    public void execute(String userId, JSONObject message) {
+    public void execute(Long userId, JSONObject message) {
         log.info("{},{}", userId, message);
         GameStatus gameStatus = new GameStatus();
 
@@ -33,7 +33,7 @@ public class GameStatusFacade extends MessageHandler {
         gameStatus.setGamestatus(PlayerStatus.IDLE.toString());
 
         //查看玩家是否在房间内
-        String roomId = RedisRoomHelper.getRoomIdByUserId(userId);
+        String roomId = RedisRoomHelper.getRoomNoByUserId(userId);
         //Room 不为空，表示已经在游戏中（断线重连情况）
         if (!StringUtils.isBlank(roomId) ) {
             gameStatus.setGamestatus(PlayerStatus.WATCH.toString());

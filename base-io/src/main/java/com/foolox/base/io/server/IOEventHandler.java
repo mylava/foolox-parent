@@ -46,7 +46,7 @@ public class IOEventHandler implements IWsMsgHandler {
         Tio.bindToken(channelContext, token);
         channelContext.setAttribute("userId", userId);
         channelContext.setAttribute("token", token);
-        SessionManager.instance.registerSession(userId, channelContext.getGroupContext());
+        SessionManager.instance.registerSession(Long.valueOf(userId), channelContext.getGroupContext());
         log.info("on handshaked, add session success");
         return httpResponse;
     }
@@ -56,7 +56,7 @@ public class IOEventHandler implements IWsMsgHandler {
         //鉴权
         if (TestSwitch.checkAuth) {
             String token = channelContext.getAttribute("token").toString();
-            String userId = channelContext.getAttribute("userId").toString();
+            Long userId = Long.valueOf(channelContext.getAttribute("userId").toString());
             if (!checkAuth(token, userId)) {
                 Tio.remove(channelContext, "receive close flag");
                 log.info("after handshaked, close session success, chechAuth: token=[{}], userId=[{}]", token, userId);
@@ -92,10 +92,10 @@ public class IOEventHandler implements IWsMsgHandler {
             String userId = channelContext.getAttribute("userId").toString();
 
             //更新token过期时间
-            RedisPlayerHelper.expireToken(userId);
+            RedisPlayerHelper.expireToken(Long.valueOf(userId));
 
             //交由controller处理
-            messageDispatcher.dispatch(userId, command, JSONObject.parseObject(fooloxClient.getMessage()));
+            messageDispatcher.dispatch(Long.valueOf(userId), command, JSONObject.parseObject(fooloxClient.getMessage()));
         }
         return null;
     }
@@ -106,7 +106,7 @@ public class IOEventHandler implements IWsMsgHandler {
      *
      * @return
      */
-    private boolean checkAuth(String token, String userId) {
+    private boolean checkAuth(String token, Long userId) {
         log.info("token={}, userId={}", token, userId);
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId)) {
             CodeMessage codeMessage = CodeMessage.PARAMS_EMPTY_ERROR.fillArgs("token", "userId");

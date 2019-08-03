@@ -8,14 +8,20 @@ package com.foolox.base.constant.game;
  */
 public enum GameType {
     //牛牛
-    BULLFIGHT,
+    BULLFIGHT(1),
     //跑得快
-    RUNFAST,
+    RUNFAST(2),
     //德州扑克
-    TEXAS_POKER,
+    TEXAS_POKER(3),
     //
-    MAHJONG,
+    MAHJONG(4),
     ;
+
+    int value;
+
+    GameType(int value) {
+        this.value = value;
+    }
 
     @Override
     public String toString() {
@@ -30,4 +36,5 @@ public enum GameType {
         }
         return null;
     }
+
 }

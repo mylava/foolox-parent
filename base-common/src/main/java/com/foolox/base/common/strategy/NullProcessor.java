@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Strategy(ProcessorType.NULL)
 public class NullProcessor extends Processor {
     @Override
-    public void process(String userId, JSONObject param) {
+    public void process(Long userId, JSONObject param) {
         log.error("incorrect invoke for null processor, userId is [{}]", userId);
     }
 }

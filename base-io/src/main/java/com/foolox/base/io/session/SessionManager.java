@@ -21,9 +21,9 @@ public class SessionManager extends WsServerAioListener {
     /**
      * 缓存用户id与对应的会话上下文
      */
-    private static ConcurrentMap<String, GroupContext> player2Context = new ConcurrentHashMap<>();
+    private static ConcurrentMap<Long, GroupContext> player2Context = new ConcurrentHashMap<>();
 
-    public static GroupContext getSessionByPlayerId(String playerId) {
+    public static GroupContext getSessionByPlayerId(Long playerId) {
         return player2Context.get(playerId);
     }
 
@@ -34,7 +34,7 @@ public class SessionManager extends WsServerAioListener {
      * @param groupContext
      * @return
      */
-    public boolean registerSession(String playerId, GroupContext groupContext) {
+    public boolean registerSession(Long playerId, GroupContext groupContext) {
         player2Context.put(playerId, groupContext);
         log.info("player [{}] registered...", playerId);
         return true;

@@ -10,8 +10,11 @@ package com.foolox.base.constant.rediskey;
  * @description:
  */
 public abstract class BasePrefix implements KeyPrefix {
-
+    //默认两天
     private static final int DEFAULT_EXPIRE = 3600 * 24 * 2;
+
+    protected static final int ONE_DAY = 3600*24;
+
     private int expireSeconds;
 
     private String prefix;
@@ -22,7 +25,6 @@ public abstract class BasePrefix implements KeyPrefix {
         this.prefix = prefix;
     }
 
-    //希望userkey永不过期
     public BasePrefix(String prefix) {
         this(DEFAULT_EXPIRE, prefix);
     }

@@ -7,7 +7,7 @@ package com.foolox.base.common.disruptor.event;
  * @date: 20/05/2019
  */
 public enum DbEventType {
-    SAVE, UPDATE, DELETE;
+    SAVE, UPDATE, DELETE,;
 
     @Override
     public String toString() {

@@ -18,11 +18,11 @@ import java.io.IOException;
  */
 @Slf4j
 public class MessageSender {
-    public static void sendToUser(String userId, CommonMessage msg) {
+    public static void sendToUser(Long userId, CommonMessage msg) {
         try {
             log.info("send to client: userId={}, message={}", userId, msg);
             //Event使用cmd代替
-            Tio.sendToUser(SessionManager.getSessionByPlayerId(userId), userId, convertToTextResponse(msg));
+            Tio.sendToUser(SessionManager.getSessionByPlayerId(userId), userId.toString(), convertToTextResponse(msg));
         } catch (IOException e) {
             e.printStackTrace();
         }

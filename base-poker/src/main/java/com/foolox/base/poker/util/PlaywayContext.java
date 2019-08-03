@@ -2,7 +2,7 @@ package com.foolox.base.poker.util;
 
 import com.foolox.base.constant.annotation.PlaywayMeta;
 import com.foolox.base.constant.game.GameType;
-import com.foolox.base.db.domain.Playway;
+import com.foolox.base.poker.domain.Playway;
 import com.foolox.base.io.util.ClassScanner;
 import lombok.extern.slf4j.Slf4j;
 
