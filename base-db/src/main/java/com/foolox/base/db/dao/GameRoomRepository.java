@@ -1,6 +1,6 @@
-package com.foolox.base.poker.dao;
+package com.foolox.base.db.dao;
 
-import com.foolox.base.poker.domain.GameRoom;
+import com.foolox.base.db.domain.GameRoom;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -3,6 +3,8 @@ package com.foolox.base.common.util.redis;
 import com.foolox.base.common.util.RedisUtil;
 import com.foolox.base.constant.rediskey.RoomPrefix;
 
+import java.util.List;
+
 /**
  * comment:
  *
@@ -12,13 +14,13 @@ import com.foolox.base.constant.rediskey.RoomPrefix;
 public class RedisRoomHelper {
 
     /**
-     * 通过 userId 获取 所在房间的 RoomNo
+     * 通过 playerId 获取 所在房间的 RoomNo
      *
-     * @param userId
+     * @param playerId
      * @return
      */
-    public static String getRoomNoByUserId(Long userId) {
-        return RedisUtil.get(RoomPrefix.USERID_GAMEROOMNO, userId.toString());
+    public static String getRoomNoByPlayerId(Long playerId) {
+        return RedisUtil.get(RoomPrefix.PLAYERID_GAMEROOMNO, playerId.toString());
     }
 
     /**
@@ -46,5 +48,32 @@ public class RedisRoomHelper {
      */
     public static Boolean existRoomNo(String roomNo) {
         return RedisUtil.exists(RoomPrefix.ROOMNO_GAMEROOM, roomNo);
+    }
+
+    /**
+     * 获取所有在房间内的玩家ID
+     * @param roomNo
+     * @return
+     */
+    public static List<Long> getRoomPlayerIdList(String roomNo) {
+        return RedisUtil.lrange(RoomPrefix.ROOMNO_PLAYERID_LIST, roomNo, 0, -1, Long.class);
+    }
+
+    /**
+     * 保存 playerId 到 roomId 与 List<playerId> 映射关系到缓存
+     * @param roomId
+     * @param playerId
+     */
+    public static void addRoomPlayerId(String roomId, Long playerId) {
+        RedisUtil.lpush(RoomPrefix.ROOMNO_PLAYERID_LIST, roomId, playerId);
+    }
+
+    /**
+     * 保存 playerId 到 roomNo 与 List<playerId> 映射关系到缓存
+     * @param roomNo
+     * @param playerId
+     */
+    public static <T> void addRoomPlayer(String roomNo, Long playerId, T value) {
+        RedisUtil.hset(RoomPrefix.ROOMNO_PLAYER_MAP, roomNo, playerId.toString(), value);
     }
 }

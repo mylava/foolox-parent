@@ -41,12 +41,12 @@ public class IOEventHandler implements IWsMsgHandler {
     @Override
     public HttpResponse handshake(HttpRequest httpRequest, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
         String token = httpRequest.getParam("token");
-        String userId = httpRequest.getParam("userId");
-        Tio.bindUser(channelContext, userId);
+        String playerId = httpRequest.getParam("playerId");
+        Tio.bindUser(channelContext, playerId);
         Tio.bindToken(channelContext, token);
-        channelContext.setAttribute("userId", userId);
+        channelContext.setAttribute("playerId", playerId);
         channelContext.setAttribute("token", token);
-        SessionManager.instance.registerSession(Long.valueOf(userId), channelContext.getGroupContext());
+        SessionManager.instance.registerSession(Long.valueOf(playerId), channelContext.getGroupContext());
         log.info("on handshaked, add session success");
         return httpResponse;
     }
@@ -56,10 +56,10 @@ public class IOEventHandler implements IWsMsgHandler {
         //鉴权
         if (TestSwitch.checkAuth) {
             String token = channelContext.getAttribute("token").toString();
-            Long userId = Long.valueOf(channelContext.getAttribute("userId").toString());
-            if (!checkAuth(token, userId)) {
+            Long playerId = Long.valueOf(channelContext.getAttribute("playerId").toString());
+            if (!checkAuth(token, playerId)) {
                 Tio.remove(channelContext, "receive close flag");
-                log.info("after handshaked, close session success, chechAuth: token=[{}], userId=[{}]", token, userId);
+                log.info("after handshaked, close session success, chechAuth: token=[{}], playerId=[{}]", token, playerId);
             }
         }
 
@@ -89,13 +89,13 @@ public class IOEventHandler implements IWsMsgHandler {
             if (StringUtils.isEmpty(command)) {
                 return null;
             }
-            String userId = channelContext.getAttribute("userId").toString();
+            String playerId = channelContext.getAttribute("playerId").toString();
 
             //更新token过期时间
-            RedisPlayerHelper.expireToken(Long.valueOf(userId));
+            RedisPlayerHelper.expireToken(Long.valueOf(playerId));
 
             //交由controller处理
-            messageDispatcher.dispatch(Long.valueOf(userId), command, JSONObject.parseObject(fooloxClient.getMessage()));
+            messageDispatcher.dispatch(Long.valueOf(playerId), command, JSONObject.parseObject(fooloxClient.getMessage()));
         }
         return null;
     }
@@ -106,20 +106,20 @@ public class IOEventHandler implements IWsMsgHandler {
      *
      * @return
      */
-    private boolean checkAuth(String token, Long userId) {
-        log.info("token={}, userId={}", token, userId);
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(userId)) {
-            CodeMessage codeMessage = CodeMessage.PARAMS_EMPTY_ERROR.fillArgs("token", "userId");
+    private boolean checkAuth(String token, Long playerId) {
+        log.info("token={}, playerId={}", token, playerId);
+        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(playerId)) {
+            CodeMessage codeMessage = CodeMessage.PARAMS_EMPTY_ERROR.fillArgs("token", "playerId");
             CommonMessage commonMessage = new CommonMessage("connect", codeMessage);
-            MessageSender.sendToUser(userId, commonMessage);
+            MessageSender.sendToUser(playerId, commonMessage);
             return false;
         }
         //校验token
-        String redisToken = RedisPlayerHelper.getToken(userId);
+        String redisToken = RedisPlayerHelper.getToken(playerId);
 
         log.info("redisToken={}", redisToken);
         if (null == redisToken || !token.equals(redisToken)) {
-            CodeMessage codeMessage = CodeMessage.HAS_NO_TOKEN_ERROR.fillArgs("token", "userId");
+            CodeMessage codeMessage = CodeMessage.HAS_NO_TOKEN_ERROR.fillArgs("token", "playerId");
             CommonMessage commonMessage = new CommonMessage("connect", codeMessage);
             return false;
         }

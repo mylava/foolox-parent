@@ -1,8 +1,8 @@
-package com.foolox.base.poker.statemachine;
+package com.foolox.base.common.statemachine;
 
 import com.foolox.base.constant.game.GameType;
 import com.foolox.base.constant.game.PlayerAction;
-import com.foolox.base.poker.domain.GameRoom;
+import com.foolox.base.db.domain.GameRoom;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

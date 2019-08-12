@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "asset", indexes = {@Index(columnList = "id", unique = true)})
+@Table(name = "asset", indexes = {@Index(columnList = "id", unique = true)} )
 @AllArgsConstructor
 @NoArgsConstructor
 public class Asset implements DbEvent {

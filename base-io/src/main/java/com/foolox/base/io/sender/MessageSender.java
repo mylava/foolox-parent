@@ -9,6 +9,7 @@ import org.tio.websocket.common.Opcode;
 import org.tio.websocket.common.WsResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * comment:
@@ -18,11 +19,33 @@ import java.io.IOException;
  */
 @Slf4j
 public class MessageSender {
-    public static void sendToUser(Long userId, CommonMessage msg) {
+    /**
+     * 单发消息
+     * @param playerId
+     * @param msg
+     */
+    public static void sendToUser(Long playerId, CommonMessage msg) {
         try {
-            log.info("send to client: userId={}, message={}", userId, msg);
+            log.info("send [single message] to client: playerId={}, message={}", playerId, msg);
             //Event使用cmd代替
-            Tio.sendToUser(SessionManager.getSessionByPlayerId(userId), userId.toString(), convertToTextResponse(msg));
+            Tio.sendToUser(SessionManager.getSessionByPlayerId(playerId), playerId.toString(), convertToTextResponse(msg));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 群发消息
+     * @param playerIds
+     * @param msg
+     */
+    public static void sendToGroup(List<Long> playerIds, CommonMessage msg) {
+        try {
+            for (Long playerId : playerIds) {
+                log.info("send [group message] to client: playerId={}, message={}", playerId, msg);
+                Tio.sendToUser(SessionManager.getSessionByPlayerId(playerId), playerId.toString(), convertToTextResponse(msg));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

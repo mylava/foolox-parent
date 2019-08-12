@@ -30,5 +30,9 @@ public abstract class MessageHandler {
         return new CommonMessage<T>(this.getCommand(), codeMessage);
     }
 
-    public abstract void execute(Long userId, JSONObject message);
+    public <T> CommonMessage<T> fail(int code, String message) {
+        return new CommonMessage<T>(this.getCommand(), code, message);
+    }
+
+    public abstract void execute(Long playerId, JSONObject message);
 }

@@ -1,5 +1,6 @@
 package com.foolox.base.constant.annotation;
 
+import com.foolox.base.constant.game.GameType;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
@@ -15,5 +16,5 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Strategy {
-    ProcessorType value();
+    GameType type();
 }

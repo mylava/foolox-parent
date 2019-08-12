@@ -19,6 +19,7 @@ public class CodeMessage {
     public static CodeMessage GAME_SERVER_UNAVAILABLE_ERROR = new CodeMessage(500102, "没有可用的游戏服务器");
     public static CodeMessage VALIDATE_ERROR = new CodeMessage(500103,"参数错误：%s");
     public static CodeMessage REPEAT_REQUEST= new CodeMessage(500104,"重复请求:%s");
+    public static CodeMessage MACHINEID_INCORRECT = new CodeMessage(500105, "错误的游戏服务器");
 
     //登录模块
     public static CodeMessage ILLEGAL_TOKEN_ERROR = new CodeMessage(500201, "TOKEN状态异常：%s");
@@ -31,11 +32,17 @@ public class CodeMessage {
     public static CodeMessage ILLEGAL_STATUS_ERROR = new CodeMessage(500208,"用户状态异常：%s");
 
     //货币相关
-    public static CodeMessage COST_OUT_ERROR = new CodeMessage(500301, "创建房间费用不足！");
+    public static CodeMessage COST_OUT_ERROR = new CodeMessage(500301, "创建房间费用不足");
 
 
     //房间模块
-    public static CodeMessage ILLEGAL_ROOM_NO = new CodeMessage(500401, "房间号错误！");
+    public static CodeMessage ILLEGAL_ROOMNO = new CodeMessage(500401, "房间号错误");
+    public static CodeMessage ROOM_ON_DISSOLVE = new CodeMessage(500402, "房间正在解散中");
+    public static CodeMessage ROOM_IS_FULL = new CodeMessage(500403, "房间已满员");
+
+    //俱乐部模块
+    public static CodeMessage PLAYER_NOT_IN_CLUB = new CodeMessage(500501, "玩家不在俱乐部中");
+
 
 
     private int code;

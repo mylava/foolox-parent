@@ -1,4 +1,4 @@
-package com.foolox.game.niuniu.model;
+package com.foolox.base.poker.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

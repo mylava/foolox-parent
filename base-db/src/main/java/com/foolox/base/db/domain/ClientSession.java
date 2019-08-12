@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientSession implements DbEvent {
-    private long userId;
+    private long playerId;
     /**
      * --------------- ---------------
      * 基本信息,与房间、游戏无关

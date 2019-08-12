@@ -1,7 +1,7 @@
-package com.foolox.game.niuniu.model;
+package com.foolox.base.poker.model;
 
 import com.foolox.base.poker.event.TakeCards;
-import com.foolox.base.poker.domain.GameRoom;
+import com.foolox.base.db.domain.GameRoom;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -55,10 +55,10 @@ public abstract class Board {
     /**
      * 找到玩家的 位置
      *
-     * @param userid
+     * @param playerId
      * @return
      */
-    public abstract int index(Long userid);
+    public abstract int index(Long playerId);
 
     /**
      * 计算结算信息
@@ -137,32 +137,32 @@ public abstract class Board {
     /**
      * 找到玩家数据
      *
-     * @param userid
+     * @param playerId
      * @return
      */
-    public GamePlayer getGamePlayer(Long userid) {
+    public GamePlayer getGamePlayer(Long playerId) {
         GamePlayer temp = null;
-        if (this.gamePlayers != null) {
+        /*if (this.gamePlayers != null) {
             for (GamePlayer user : gamePlayers) {
-                if (user.getPlayuserId() != null && user.getPlayuserId().equals(userid)) {
+                if (user.getPlayplayerId() != null && user.getPlayplayerId().equals(playerId)) {
                     temp = user;
                     break;
                 }
             }
-        }
+        }*/
         return temp;
     }
 
     /**
      * 找到玩家数据
      *
-     * @param userid
+     * @param playerId
      * @return
      */
-//    public ClientSession getClientSession(List<ClientSession> clientSessionList, Long userid) {
+//    public ClientSession getClientSession(List<ClientSession> clientSessionList, Long playerId) {
 //        ClientSession temp = null;
 //        for (ClientSession clientSession : clientSessionList) {
-//            if (clientSession.getId().equals(userid)) {
+//            if (clientSession.getId().equals(playerId)) {
 //                temp = clientSession;
 //                break;
 //            }

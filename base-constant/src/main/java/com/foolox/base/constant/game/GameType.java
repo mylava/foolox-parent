@@ -7,6 +7,8 @@ package com.foolox.base.constant.game;
  * @date: 28/07/2019
  */
 public enum GameType {
+    //空
+    NULL(0),
     //牛牛
     BULLFIGHT(1),
     //跑得快

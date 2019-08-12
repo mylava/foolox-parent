@@ -1,4 +1,4 @@
-package com.foolox.game.niuniu.model;
+package com.foolox.base.poker.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class SummaryPlayer {
-    private long userid;
+    private long playerId;
     private String username;
     private int ratio;
     private long score;
@@ -23,8 +23,8 @@ public class SummaryPlayer {
 
     private boolean dizhu;
 
-    public SummaryPlayer(long userid, String username, int ratio, int score, boolean win, boolean dizhu) {
-        this.userid = userid;
+    public SummaryPlayer(long playerId, String username, int ratio, int score, boolean win, boolean dizhu) {
+        this.playerId = playerId;
         this.username = username;
         this.ratio = ratio;
         this.score = score;

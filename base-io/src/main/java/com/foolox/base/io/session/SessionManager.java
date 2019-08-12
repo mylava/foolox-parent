@@ -51,8 +51,8 @@ public class SessionManager extends WsServerAioListener {
      */
     @Override
     public void onBeforeClose(ChannelContext channelContext, Throwable throwable, String remark, boolean isRemove) throws Exception {
-        String userId = channelContext.getAttribute("userId").toString();
-        player2Context.remove(userId);
+        String playerId = channelContext.getAttribute("playerId").toString();
+        player2Context.remove(playerId);
         log.info("before close, remove session success");
         super.onBeforeClose(channelContext, throwable, remark, isRemove);
     }

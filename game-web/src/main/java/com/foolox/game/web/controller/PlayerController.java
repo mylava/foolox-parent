@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.*;
  * @author: lipengfei
  * @date: 11/05/2019
  */
-@Api(value = "LoginController")
+@Api(value = "PlayerController")
 @Slf4j
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/player")
+public class PlayerController {
 
     @Autowired
     private PlayerService playerService;
 
     @ApiOperation(value = "登录")
-    @RequestMapping(value = "default", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Result<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public Result<String> login(@RequestParam(value = "username", required = true) String username,
+                                @RequestParam(value = "password", required = true) String password) {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return Result.fail(CodeMessage.PARAMS_EMPTY_ERROR.fillArgs(StringUtils.isEmpty(username)?"username":"password"));
         }

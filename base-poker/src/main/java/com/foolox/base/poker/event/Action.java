@@ -15,18 +15,18 @@ public class Action {
     private byte card;
     private String action;
     private String type;            //动作类型， 杠 ： 明杠|暗杠|弯杠  ，  胡：胡法
-    private long userid;
+    private long playerId;
     private boolean gang;            //碰了以后，是否已再杠
 
-    public Action(long userid, String action, String type, byte card) {
-        this.userid = userid;
+    public Action(long playerId, String action, String type, byte card) {
+        this.playerId = playerId;
         this.action = action;
         this.type = type;
         this.card = card;
     }
 
-    public Action(long userid, String action, byte card) {
-        this.userid = userid;
+    public Action(long playerId, String action, byte card) {
+        this.playerId = playerId;
         this.action = action;
         this.card = card;
     }

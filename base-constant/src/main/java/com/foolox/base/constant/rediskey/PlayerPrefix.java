@@ -13,15 +13,15 @@ public class PlayerPrefix extends BasePrefix {
 
     //key命名规范： key_value
 
-    //USERID TOKEN
-    public static final PlayerPrefix USERID_TOKEN = new PlayerPrefix("player:userid:token");
-    //USERID FIELD
-    public static final PlayerPrefix USERID_FIELD = new PlayerPrefix("player:userid:field");
+    //PLAYERID TOKEN
+    public static final PlayerPrefix PLAYERID_TOKEN = new PlayerPrefix("player:playerid:token");
+    //PLAYERID FIELD
+    public static final PlayerPrefix PLAYERID_FIELD = new PlayerPrefix("player:playerid:field");
     //getGamePlayerCacheBean:
-    //进入房间的用户与ClientSession对应关系  key(userId -- clientSession)
-    //getApiUserCacheBean 保存 userId 与 clientsession 的映射关系
-    public static final PlayerPrefix USERID_SESSION = new PlayerPrefix("player:userid:session");
-    public static final PlayerPrefix PLAYER_ROOM = new PlayerPrefix("clientSessionList:room");
+    //进入房间的用户与ClientSession对应关系  key(playerid -- clientSession)
+    //getApiUserCacheBean 保存 playerid 与 clientsession 的映射关系
+    public static final PlayerPrefix PLAYERID_SESSION = new PlayerPrefix("player:playerid:session");
+    public static final PlayerPrefix PLAYERID_ROOMNO = new PlayerPrefix("player:playerid:roomno");
     public static final PlayerPrefix PLAYER_CLIENTSESSIONID_PLAYER = new PlayerPrefix("player:clientsessionid:gameplayer");
     //getApiUserCacheBean
     public static final PlayerPrefix PLAYER_LOGIN_CLIENTSESSION = new PlayerPrefix("player:login:clientsession");

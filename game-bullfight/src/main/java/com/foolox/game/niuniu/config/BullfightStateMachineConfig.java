@@ -1,6 +1,5 @@
 package com.foolox.game.niuniu.config;
 
-import com.foolox.base.constant.game.GameType;
 import com.foolox.base.constant.game.PlayerAction;
 import com.foolox.base.constant.game.RoomStatus;
 import org.springframework.context.annotation.Configuration;

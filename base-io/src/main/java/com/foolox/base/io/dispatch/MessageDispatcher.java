@@ -30,17 +30,17 @@ public class MessageDispatcher {
     /**
      * message entrance, in which io thread dispatch messages
      *
-     * @param userId
+     * @param playerId
      * @param command
      * @param message
      */
-    public void dispatch(Long userId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
+    public void dispatch(Long playerId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
         CmdExecutor cmdExecutor = COMMAND_HANDLERS.get(command);
         if (cmdExecutor == null) {
             log.error("message executor missed, command={}", command);
             return;
         }
-        Object[] params = convertToMethodParams(userId, cmdExecutor.getParams(), message);
+        Object[] params = convertToMethodParams(playerId, cmdExecutor.getParams(), message);
         Object handler = cmdExecutor.getHandler();
         cmdExecutor.getMethod().invoke(handler, params);
     }
@@ -48,18 +48,18 @@ public class MessageDispatcher {
     /**
      * 将各种参数转为被RequestMapper注解的方法的实参
      *
-     * @param userId
+     * @param playerId
      * @param methodParams
      * @param message
      * @return
      */
-    private Object[] convertToMethodParams(Long userId, Class<?>[] methodParams, JSONObject message) {
+    private Object[] convertToMethodParams(Long playerId, Class<?>[] methodParams, JSONObject message) {
         Object[] result = new Object[methodParams == null ? 0 : methodParams.length];
 
         for (int i = 0; i < result.length; i++) {
             Class<?> param = methodParams[i];
             if (Long.class.isAssignableFrom(param)) {
-                result[i] = userId;
+                result[i] = playerId;
             } else if (JSONObject.class.isAssignableFrom(param)) {
                 result[i] = message;
             }

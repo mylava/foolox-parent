@@ -2,7 +2,7 @@ package com.foolox.base.poker.util;
 
 import com.foolox.base.constant.annotation.PlaywayMeta;
 import com.foolox.base.constant.game.GameType;
-import com.foolox.base.poker.domain.Playway;
+import com.foolox.base.model.Playway;
 import com.foolox.base.io.util.ClassScanner;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,22 +17,21 @@ import java.util.Set;
  * @date: 30/07/2019
  */
 @Slf4j
-public class PlaywayContext {
-    private ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+public class PlaywayStrategy {
     //存储所有策略
     private static final Map<GameType, Class> playwayMap = new HashMap<>();
 
     //静态内部类实现单例模式
-    private PlaywayContext() {
+    private PlaywayStrategy() {
         init();
     }
 
-    public static PlaywayContext getInstance() {
+    public static PlaywayStrategy getInstance() {
         return PlaywayContextInstance.instance;
     }
 
     private static class PlaywayContextInstance {
-        private static PlaywayContext instance = new PlaywayContext();
+        private static PlaywayStrategy instance = new PlaywayStrategy();
     }
 
     //在工厂初始化时要初始化策略列表
@@ -50,7 +49,7 @@ public class PlaywayContext {
         }
     }
 
-    public Class getPlaywayClass(GameType gameType) {
+    public Class getPlaywayClassByGameType(GameType gameType) {
         Class clz = playwayMap.get(gameType);
         if (null==clz) {
             log.error("get playway failed, gameType is [{}]", gameType);

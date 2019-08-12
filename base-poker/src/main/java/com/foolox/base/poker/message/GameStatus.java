@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GameStatus {
     private String gamestatus;
-    private long userid;
+    private long playerId;
     private String gametype;
     private String event;
 }

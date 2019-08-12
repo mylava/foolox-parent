@@ -51,7 +51,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("401");
                 }
-                Player player = playerService.findPlayerById(playerId);
+//                Player player = playerService.findPlayerById(playerId);
+                Player player = null;
                 if (player == null) {
                     throw new RuntimeException("用户不存在，请重新登录");
                 }

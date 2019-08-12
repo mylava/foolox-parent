@@ -1,7 +1,7 @@
 package com.foolox.base.common.strategy;
 
 import com.foolox.base.constant.annotation.Strategy;
-import com.foolox.base.constant.annotation.ProcessorType;
+import com.foolox.base.constant.game.GameType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -19,10 +19,10 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class ProcessorFactory implements BeanPostProcessor, Ordered {
+public class ServiceFactory implements BeanPostProcessor, Ordered {
 
     //存储所有策略
-    private static final Map<ProcessorType, Object> strategyMap = new HashMap<>();
+    private static final Map<GameType, Object> strategyMap = new HashMap<>();
 
     @Override
     public int getOrder() {
@@ -34,8 +34,8 @@ public class ProcessorFactory implements BeanPostProcessor, Ordered {
         try {
             Class<?> clz = bean.getClass();
             Strategy annotation = clz.getAnnotation(Strategy.class);
-            if (null != annotation && Processor.class.isAssignableFrom(clz)) {
-                strategyMap.put(annotation.value(), bean);
+            if (null != annotation && GameService.class.isAssignableFrom(clz)) {
+                strategyMap.put(annotation.type(), bean);
                 log.info("-------regist annotation {} -------", bean);
             }
         } catch (Exception e) {
@@ -50,17 +50,16 @@ public class ProcessorFactory implements BeanPostProcessor, Ordered {
      * @param
      * @return
      */
-    public Processor createStrategy(String command, ProcessorType processorType) {
-        Processor processor = null;
-        Object bean = strategyMap.get(processorType);
+    public GameService createStrategy(String command, GameType gameType) {
+        GameService gameService = null;
+        Object bean = strategyMap.get(gameType);
         if (null == bean) {
-            log.error("get processor strategy [{}] fail, command is [{}]", processorType, command);
-            processor = (Processor) strategyMap.get(ProcessorType.NULL);
-
+            log.error("get gameService strategy [{}] fail, command is [{}]", gameType, command);
+            gameService = (GameService) strategyMap.get(gameType.NULL);
         } else {
-            processor = (Processor) bean;
+            gameService = (GameService) bean;
         }
-        processor.setCommand(command);
-        return processor;
+        gameService.setCommand(command);
+        return gameService;
     }
 }

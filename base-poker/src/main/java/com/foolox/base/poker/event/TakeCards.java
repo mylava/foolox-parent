@@ -1,6 +1,6 @@
 package com.foolox.base.poker.event;
 
-import com.foolox.game.niuniu.model.CardType;
+import com.foolox.base.poker.model.CardType;
 import lombok.Data;
 
 /**
@@ -15,7 +15,7 @@ public abstract class TakeCards {
     private String banker;     //庄家
     private boolean allow;        //符合出牌规则 ，
     private boolean donot;        //出 OR 不出
-    private long userid;
+    private long playerId;
     private byte[] cards;
 //    private byte card ;			//麻将出牌
 

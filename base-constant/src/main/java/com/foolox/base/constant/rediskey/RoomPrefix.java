@@ -15,14 +15,15 @@ public class RoomPrefix extends BasePrefix{
         super(ONE_DAY,prefix);
     }
 
-    //进入房间的用户与ClientSession对应关系  key(userId -- clientSession)
-//    public static final RoomPrefix ROOM_ID_CLIENTSESSION = new RoomPrefix("room:userId:clientsession");
+    //进入房间的用户与ClientSession对应关系  key(playerId -- clientSession)
     //getGamePlayerCacheBean: roomId - clientsession list
-    public static final RoomPrefix ROOM_ROOMID_CLIENTSESSION_LIST = new RoomPrefix("room:roomId:clientsession_list");
+    public static final RoomPrefix ROOMNO_PLAYERID_LIST = new RoomPrefix("room:roomNo:playerId:list");
+
+    public static final RoomPrefix ROOMNO_PLAYER_MAP = new RoomPrefix("room:roomNo:player:map");
 
     //getRoomMappingCacheBean
-    //进入房间的用户Id 与 gameRoomId的对应关系 key(userId -- gameroomId)
-    public static final RoomPrefix USERID_GAMEROOMNO = new RoomPrefix("room:userId:roomNo");
+    //进入房间的用户Id 与 gameRoomId的对应关系 key(playerId -- gameroomId)
+    public static final RoomPrefix PLAYERID_GAMEROOMNO = new RoomPrefix("room:playerId:roomNo");
 
     //getGameRoomCacheBean
     //RoomId 与 GameRoom 的对应关系 key(RoomId -- GameRoom)
