@@ -1,7 +1,7 @@
 package com.foolox.base.common.loadbalance;
 
 import com.foolox.base.constant.game.GameType;
-import com.foolox.base.constant.loadbalance.MachineStatus;
+import com.foolox.base.constant.sysdic.MachineStatus;
 import lombok.Data;
 
 /**

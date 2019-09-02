@@ -20,6 +20,8 @@ public enum PlayerStatus {
     ;
     int value;
 
+    //STAY 需要重构，将房间状态与玩家状态区分开
+
     PlayerStatus(int value) {
         this.value = value;
     }

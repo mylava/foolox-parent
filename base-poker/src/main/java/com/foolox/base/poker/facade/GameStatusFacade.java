@@ -1,13 +1,18 @@
 package com.foolox.base.poker.facade;
 
 import com.alibaba.fastjson.JSONObject;
+import com.foolox.base.common.util.FooloxUtils;
+import com.foolox.base.common.util.redis.RedisBoardHelper;
 import com.foolox.base.common.util.redis.RedisRoomHelper;
 import com.foolox.base.constant.annotation.Facade;
 import com.foolox.base.constant.annotation.MessageEvent;
+import com.foolox.base.constant.annotation.PlaywayMeta;
 import com.foolox.base.constant.game.PlayerStatus;
+import com.foolox.base.db.domain.GameRoom;
 import com.foolox.base.io.handler.MessageHandler;
 import com.foolox.base.io.sender.MessageSender;
 import com.foolox.base.poker.message.GameStatus;
+import com.foolox.base.poker.model.Board;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,26 +36,25 @@ public class GameStatusFacade extends MessageHandler {
         gameStatus.setGamestatus(PlayerStatus.LOGIN.toString());
 
         //查看玩家是否在房间内
-        String roomId = RedisRoomHelper.getRoomNoByPlayerId(playerId);
+        String roomNo = RedisRoomHelper.getRoomNoByPlayerId(playerId);
         //Room 不为空，表示已经在游戏中（断线重连情况）
-        if (!StringUtils.isBlank(roomId) ) {
-            gameStatus.setGamestatus(PlayerStatus.WATCH.toString());
+        if (!StringUtils.isBlank(roomNo) ) {
             //读取房间信息
-//            GameRoom gameRoom = FooloxUtils.getRoomById(roomId, GameRoom.class);
-//            //Board 不为空
-//            FooloxUtils.getBoardByRoomId(roomId, Board.class) != null
-//
-//            //读取玩法信息
-//            PlaywayMeta playway = FooloxUtils.getGamePlaywayById(gameRoom.getPlaywayInfo().getPlaywayId());
-//            gameStatus.setGametype(playway.getModelCode());
-//            gameStatus.setPlayway(playway.getId());
-//            //更新玩家状态为游戏中
-//            log.info("user {} is playing, gameRoom = {}", playerId, gameRoom);
-//            gameStatus.setGamestatus(PlayerStatus.PLAYING.toString());
-            //房卡游戏
-//            if (gameRoom.getBaseInfo().isCardroom()) {
-//                gameStatus.setCardroom(true);
-//            }
+            GameRoom gameRoom = RedisRoomHelper.getRoomByNo(roomNo, GameRoom.class);
+            if (null != gameRoom) {
+                log.info("user {} is in room, gameRoom = {}", playerId, gameRoom);
+                gameStatus.setGamestatus(PlayerStatus.WATCH.toString());
+                gameStatus.setRoomNo(roomNo);
+                gameStatus.setGametype(gameRoom.getGameType());
+                Board board = RedisBoardHelper.getBoardByRoomNo(roomNo, Board.class);
+
+                if (null != board) {
+                    //STAY 使用roomStatus
+                    //更新玩家状态为游戏中
+                    log.info("user {} is playing, gameRoom = {}", playerId, gameRoom);
+                    gameStatus.setGamestatus(PlayerStatus.PLAYING.toString());
+                }
+            }
         }
         //发送gameStatus到客户端
         MessageSender.sendToUser(playerId, success(gameStatus));

@@ -3,7 +3,7 @@ package com.foolox.base.poker.facade;
 import com.alibaba.fastjson.JSONObject;
 import com.foolox.base.common.strategy.GameService;
 import com.foolox.base.common.strategy.ServiceFactory;
-import com.foolox.base.common.util.redis.RedisMachineHelper;
+import com.foolox.base.common.util.redis.RedisSystemHelper;
 import com.foolox.base.common.util.redis.RedisPlayerHelper;
 import com.foolox.base.constant.annotation.Facade;
 import com.foolox.base.constant.annotation.MessageEvent;
@@ -44,7 +44,7 @@ public class JoinRoomFacade extends MessageHandler {
             return;
         }
         //房间号是否存在
-        if (!RedisMachineHelper.existRoomNo(roomNo)) {
+        if (!RedisSystemHelper.existRoomNo(roomNo)) {
             log.info("player [{}] join room failed, roomNo [{}] is incorrect", playerId, roomNo);
             MessageSender.sendToUser(playerId, fail(CodeMessage.ILLEGAL_ROOMNO));
             return;

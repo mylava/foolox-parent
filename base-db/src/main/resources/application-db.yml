@@ -34,8 +34,4 @@ spring:
       # create-drop 每次加载hibernate时根据model类生成表，但是sessionFactory一关闭,表就自动删除
       # update 最常用的属性，第一次加载hibernate时根据model类会自动建立起表的结构（前提是先建立好数据库）
       #开启自动更新表结构
-      ddl-auto: create
-
-foolox:
-    commonRoom:
-      feeType: DIAMOND
+      ddl-auto: update

@@ -1,0 +1,54 @@
+server:
+  port: 8000
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10000
+    password: mylava
+    database: 0
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/foolox_game?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      initial-size: 8
+      min-idle: 1
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 300000
+      validation-query: select 'x' FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      #基于Druid的Filter-Chain扩展机制，Druid提供了3个非常有用的具有监控统计功能的Filter：
+      #StatFilter 用于统计监控信息；WallFilter 基于SQL语义分析来实现防御SQL注入攻击；LogFilter 用于输出JDBC执行的日志。
+      filters: stat,wall,slf4j
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      use-global-data-source-stat: true
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #输出sql到日志
+    show-sql: true
+    hibernate:
+      # Hibernate 自动DDL 操作
+      # create 每次加载hibernate时都会删除上一次的生成的表
+      # create-drop 每次加载hibernate时根据model类生成表，但是sessionFactory一关闭,表就自动删除
+      # update 最常用的属性，第一次加载hibernate时根据model类会自动建立起表的结构（前提是先建立好数据库）
+      #开启自动更新表结构
+      ddl-auto: update
+
+foolox:
+  commonRoom:
+    #计费类型
+    feeType: DIAMOND
+  constant:
+    checkAuth: false

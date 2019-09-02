@@ -89,7 +89,7 @@ public class CreateRoomFacade extends MessageHandler {
         GameService gameService = serviceFactory.createStrategy(getCommand(), GameType.nameOf(gameType));
 
         //STAY 配置扣除俱乐部主还是房间创建者
-        Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(creatRoomFee).getValue());
+        Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(creatRoomFee));
         if (null == asset || asset.getBalance() < gameService.getRoomCost()) {
             log.info("player [{}] create room request, balance is not enough", playerId);
             MessageSender.sendToUser(playerId, fail(CodeMessage.COST_OUT_ERROR));

@@ -1,0 +1,13 @@
+foolox:
+  ioServer:
+    port: 9000
+    #会话超时时间10分钟
+    timeout: 600000
+    machineType: bullfight
+  test:
+    checkAuth: false
+
+
+
+
+

@@ -18,7 +18,7 @@ public class Player implements DbEvent {
     @Id
     @Column(name = "id", nullable = false, columnDefinition = "bigint(11) COMMENT '用户id'")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "username", columnDefinition = "varchar(11) COMMENT '用户名'")
     private String username;
@@ -30,7 +30,7 @@ public class Player implements DbEvent {
     private String email;
 
     @Column(name = "gender", columnDefinition = "int(1) COMMENT '性别：0女 1男'")
-    private int gender;
+    private Integer gender;
 
     @Column(name = "nickname", columnDefinition = "varchar(32) COMMENT '昵称'")
     private String nickname;
@@ -45,7 +45,7 @@ public class Player implements DbEvent {
     private String headimg;
 
     @Column(name = "status", columnDefinition = "int(1) COMMENT '状态 0冻结 1正常'")
-    private int status;
+    private Integer status;
 
     @Column(name = "inviteCode", columnDefinition = "varchar(6) COMMENT '邀请码'")
     private String inviteCode;
@@ -65,6 +65,9 @@ public class Player implements DbEvent {
     @Column(name = "deactiveTime", columnDefinition = "datetime COMMENT '注销时间'")
     private Date deactiveTime;
 
-    @Column(name = "openid", columnDefinition = "varchar(128) COMMENT '微信openID'")
+    @Column(name = "openid", columnDefinition = "varchar(128) COMMENT '第三方的openID'")
     private String openid;
+
+    @Column(name = "origin", columnDefinition = "int(2) DEFAULT 0 COMMENT '用户来源 0系统注册 1微信'")
+    private Integer origin;
 }

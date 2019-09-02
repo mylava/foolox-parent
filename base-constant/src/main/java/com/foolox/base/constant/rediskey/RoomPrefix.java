@@ -32,9 +32,6 @@ public class RoomPrefix extends BasePrefix{
     //玩法 与 房间列表 的对应关系，用于匹配房间
     public static final RoomPrefix ROOM_PLAYWAY_GAMEROOM_LIST = new RoomPrefix("room:playwayId:gameroom_list");
 
-    //getBoardCacheBean roomId -- board
-    public static final RoomPrefix ROOM_ROOMID_BOARD = new RoomPrefix("room:roomNo:board");
-
     //PlayUserESRepository clientsessionid -- gameplayer
 //    public static final RoomPrefix ROOM_CLIENTSESSIONID_GAMEPLAYER = new RoomPrefix("room:clientsessionid:gameplayer");
 

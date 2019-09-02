@@ -1,5 +1,6 @@
 package com.foolox.base.poker.message;
 
+import com.foolox.base.constant.game.GameType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class GameStatus {
     private String gamestatus;
     private long playerId;
-    private String gametype;
+    private String roomNo;
+    private GameType gametype;
     private String event;
 }

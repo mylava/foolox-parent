@@ -25,21 +25,21 @@
     </properties>
 
     <modules>
-        <module>base-io</module>
-        <module>base-common</module>
-        <module>base-db</module>
-        <module>base-poker</module>
         <module>base-constant</module>
+        <module>base-db</module>
+        <module>base-common</module>
+        <module>base-io</module>
+        <module>base-poker</module>
         <module>game-web</module>
         <module>game-bullfight</module>
     </modules>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>

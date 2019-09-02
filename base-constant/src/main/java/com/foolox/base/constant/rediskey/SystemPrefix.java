@@ -15,6 +15,10 @@ public class SystemPrefix extends BasePrefix {
      * 上边需要重新上设计
      * --------------- ---------------
      */
+    public static final SystemPrefix ROOMNO_MACHINEID = new SystemPrefix("system:machine:roomNo:machineId");
+
+    public static final SystemPrefix CODE_VALUE = new SystemPrefix("system:sysdic:code:value");
+
     public static final SystemPrefix CONFIG_ID_PLAYWAY = new SystemPrefix("config:playwayId");
     // gamemodel.code -- sysdic
     public static final SystemPrefix CONFIG_CODE_SYSDIC = new SystemPrefix("config:sysdic");

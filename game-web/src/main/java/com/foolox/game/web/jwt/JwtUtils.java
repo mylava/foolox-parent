@@ -162,7 +162,7 @@ public class JwtUtils {
 
     public static void main(String[] args) {
         Player player = new Player();
-        player.setId(111);
+        player.setId(111l);
         player.setUsername("222");
         player.setPassword("333");
         String jwt = JwtUtils.createJWT(player);

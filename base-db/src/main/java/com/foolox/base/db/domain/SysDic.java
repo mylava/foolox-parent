@@ -15,7 +15,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "sysdic", indexes = {@Index(columnList = "id", unique = true)})
+@Table(name = "sysdic", indexes = {@Index(columnList = "id", unique = true)/*,
+    @Index(name = "sysdic_code_unique", columnList="code", unique = true)*/})
 @org.hibernate.annotations.Table(appliesTo = "sysdic", comment = "系统字典表")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,6 +34,9 @@ public class SysDic implements DbEvent {
 
     @Column(name = "code", columnDefinition = "varchar(11) COMMENT '代码'")
     private String code;
+
+    @Column(name = "value", columnDefinition = "varchar(128) COMMENT '值'")
+    private String value;
 
     @Column(name = "type", columnDefinition = "varchar(11) COMMENT '类型'")
     private String type;

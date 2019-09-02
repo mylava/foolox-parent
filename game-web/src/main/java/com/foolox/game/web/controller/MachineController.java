@@ -1,12 +1,13 @@
 package com.foolox.game.web.controller;
 
 import com.foolox.base.common.loadbalance.MachineInfo;
-import com.foolox.base.constant.loadbalance.MachineStatus;
+import com.foolox.base.constant.sysdic.MachineStatus;
 import com.foolox.base.constant.result.CodeMessage;
 import com.foolox.base.common.util.RedisUtil;
-import com.foolox.base.constant.loadbalance.MachineHeart;
+import com.foolox.base.constant.sysdic.MachineHeart;
 import com.foolox.base.constant.rediskey.LoadBalancePrefix;
 import com.foolox.base.constant.result.Result;
+import com.foolox.game.web.jwt.ValidateToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/machine")
 public class MachineController {
+
+    @ValidateToken
     @ApiOperation("获取running状态的服务器")
     @RequestMapping(value = "default",method = RequestMethod.GET)
     public Result<MachineInfo> machine() {
@@ -36,8 +39,8 @@ public class MachineController {
             if (machineInfo.getStatus()!= MachineStatus.RUNNING) {
                 continue;
             }
-            if (System.currentTimeMillis()>(machineInfo.getLastUpdateTime()+ MachineHeart.REDIS_MACHINE_HEART_RATE*1.5)) {
-                log.warn("machine {},心跳超时,上次心跳: ", machineInfo.getMachineId(), machineInfo.getLastUpdateTime());
+            if (System.currentTimeMillis()>(machineInfo.getLastUpdateTime() + MachineHeart.REDIS_MACHINE_HEART_RATE*1.5)) {
+                log.warn("machine {},心跳超时,上次心跳{}: ", machineInfo.getMachineId(), machineInfo.getLastUpdateTime());
                 continue;
             }
             data = machineInfo;

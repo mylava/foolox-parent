@@ -20,6 +20,7 @@ public class CodeMessage {
     public static CodeMessage VALIDATE_ERROR = new CodeMessage(500103,"参数错误：%s");
     public static CodeMessage REPEAT_REQUEST= new CodeMessage(500104,"重复请求:%s");
     public static CodeMessage MACHINEID_INCORRECT = new CodeMessage(500105, "错误的游戏服务器");
+    public static CodeMessage RUNTIME_ERROR = new CodeMessage(500106, "请求异常:%s");
 
     //登录模块
     public static CodeMessage ILLEGAL_TOKEN_ERROR = new CodeMessage(500201, "TOKEN状态异常：%s");

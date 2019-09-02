@@ -12,5 +12,5 @@ public class LoadBalancePrefix extends BasePrefix {
         super(ONE_DAY,prefix);
     }
 
-    public static final LoadBalancePrefix MACHINE = new LoadBalancePrefix("loadbalance");
+    public static final LoadBalancePrefix MACHINE = new LoadBalancePrefix("sysdic");
 }

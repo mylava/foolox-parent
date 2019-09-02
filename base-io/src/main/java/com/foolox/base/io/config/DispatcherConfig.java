@@ -39,8 +39,8 @@ public class DispatcherConfig implements BeanPostProcessor, Ordered {
             if (null != facade && MessageHandler.class.isAssignableFrom(clz)) {
                 //设置responseCommand
                 ((MessageHandler)bean).setCommand(facade.value().toString());
-                //注册到分发器
-                Method method = clz.getMethod("execute", String.class, JSONObject.class);
+                //注册到分发器 第一个参数为：方法名 第二个参数为：用户ID 第三个参数为：请求的参数信息
+                Method method = clz.getMethod("execute", Long.class, JSONObject.class);
                 CmdExecutor cmdExecutor = CmdExecutor.valueOf(method, method.getParameterTypes(), bean);
                 messageDispatcher.registerMethodInvoke(facade.value().toString(), cmdExecutor);
                 log.info("-------regist facade {} -------", bean);

@@ -60,12 +60,12 @@ public class RedisRoomHelper {
     }
 
     /**
-     * 保存 playerId 到 roomId 与 List<playerId> 映射关系到缓存
-     * @param roomId
+     * 保存 playerId 到 roomNo 与 List<playerId> 映射关系到缓存
+     * @param roomNo
      * @param playerId
      */
-    public static void addRoomPlayerId(String roomId, Long playerId) {
-        RedisUtil.lpush(RoomPrefix.ROOMNO_PLAYERID_LIST, roomId, playerId);
+    public static void addRoomPlayerId(String roomNo, Long playerId) {
+        RedisUtil.lpush(RoomPrefix.ROOMNO_PLAYERID_LIST, roomNo, playerId);
     }
 
     /**

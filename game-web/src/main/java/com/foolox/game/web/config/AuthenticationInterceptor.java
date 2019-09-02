@@ -1,7 +1,8 @@
-package com.foolox.game.web.interceptor;
+package com.foolox.game.web.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.foolox.base.constant.config.TestSwitch;
 import com.foolox.base.db.domain.Player;
 import com.foolox.game.web.jwt.JwtUtils;
 import com.foolox.game.web.jwt.ValidateToken;
@@ -29,6 +30,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");// 从 http 请求头中取出 token
+        //如果全局设置不校验权限
+        if (!TestSwitch.checkAuth) {
+            return true;
+        }
         // 如果不是映射到方法直接通过
         if(!(handler instanceof HandlerMethod)){
             return true;
@@ -51,8 +56,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("401");
                 }
-//                Player player = playerService.findPlayerById(playerId);
-                Player player = null;
+                Player player = playerService.getPlayerById(playerId);
                 if (player == null) {
                     throw new RuntimeException("用户不存在，请重新登录");
                 }

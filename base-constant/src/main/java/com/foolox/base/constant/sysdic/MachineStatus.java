@@ -1,4 +1,4 @@
-package com.foolox.base.constant.loadbalance;
+package com.foolox.base.constant.sysdic;
 
 /**
  * comment:

@@ -35,7 +35,7 @@ public class MessageDispatcher {
      * @param message
      */
     public void dispatch(Long playerId, String command, JSONObject message) throws InvocationTargetException, IllegalAccessException {
-        CmdExecutor cmdExecutor = COMMAND_HANDLERS.get(command);
+        CmdExecutor cmdExecutor = COMMAND_HANDLERS.get(command.toLowerCase());
         if (cmdExecutor == null) {
             log.error("message executor missed, command={}", command);
             return;

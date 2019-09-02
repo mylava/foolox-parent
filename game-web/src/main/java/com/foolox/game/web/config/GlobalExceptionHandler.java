@@ -1,4 +1,4 @@
-package com.foolox.game.web.interceptor;
+package com.foolox.game.web.config;
 
 import com.foolox.base.constant.result.CodeMessage;
 import com.foolox.base.constant.result.Result;
@@ -39,6 +39,8 @@ public class GlobalExceptionHandler {
             return Result.fail(CodeMessage.VALIDATE_ERROR.fillArgs((Object[]) args));
         } else if(e instanceof HttpMessageNotReadableException) {
             return Result.fail(CodeMessage.VALIDATE_ERROR.fillArgs(e.getMessage()));
+        } else if (e instanceof RuntimeException){
+            return Result.fail(CodeMessage.RUNTIME_ERROR.fillArgs(e.getMessage()));
         } else {
             log.error(e.toString(),e);
             //STAY 不同异常类型处理

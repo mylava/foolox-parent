@@ -47,4 +47,5 @@ public class FooloxUtils {
     public static void setClientSessionById(Long playerId, ClientSession clientSession) {
         RedisUtil.set(PlayerPrefix.PLAYERID_SESSION, playerId.toString(), clientSession);
     }
+
 }

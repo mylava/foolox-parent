@@ -1,7 +1,7 @@
 package com.foolox.base.common.strategy;
 
 import com.foolox.base.common.util.FooloxUtils;
-import com.foolox.base.common.util.redis.RedisMachineHelper;
+import com.foolox.base.common.util.redis.RedisSystemHelper;
 import com.foolox.base.constant.game.GameType;
 import com.foolox.base.constant.result.CodeMessage;
 import com.foolox.base.constant.result.CommonMessage;
@@ -86,10 +86,10 @@ public abstract class GameService {
             int pow = (int) Math.pow(10d, length - 1);
             String roomNo = String.valueOf((int)random * pow);
             // 判断random是否已经被占用
-            if (RedisMachineHelper.existRoomNo(roomNo)) {
+            if (RedisSystemHelper.existRoomNo(roomNo)) {
                 return newRoomNo(length);
             } else {
-                RedisMachineHelper.saveRoomNo(roomNo, FooloxUtils.MACHINE_ID);
+                RedisSystemHelper.saveRoomNo(roomNo, FooloxUtils.MACHINE_ID);
                 return roomNo;
             }
         }

@@ -65,6 +65,8 @@ public class BullfightGmeGameService extends GameService {
         room.setGameType(gameType);
         room.setClub(false);
 
+        RedisRoomHelper.saveRoom(room.getRoomNo(), room);
+
         GameEvent gameEvent = new GameEvent();
         gameEvent.setPlayerId(playerId);
         gameEvent.setRoomNo(room.getRoomNo());
@@ -110,7 +112,7 @@ public class BullfightGmeGameService extends GameService {
                 return false;
             }
 
-            Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(assetType).getValue());
+            Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(assetType));
             if (null==asset || asset.getBalance()< playway.getJoinLimit()) {
                 log.info("common room create request, playTypeExtend is empty");
                 MessageSender.sendToUser(playerId, fail(CodeMessage.PARAMS_EMPTY_ERROR.fillArgs("playTypeExtend")));
@@ -138,7 +140,7 @@ public class BullfightGmeGameService extends GameService {
         gamePlayer.setRoomNo(gameRoom.getRoomNo());
         if (gameRoom.isClub()) {
             //STAY 加上俱乐部关联 每个人在不同俱乐部有不同的筹码
-            Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(assetType).getValue());
+            Asset asset = assetRepository.findByPlayerId(playerId, AssetType.nameOf(assetType));
             gamePlayer.setTakeIn(asset.getBalance());
         }
 
